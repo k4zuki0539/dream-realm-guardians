@@ -1,0 +1,9 @@
+﻿area_id,scene_id,x_pos,y_pos,width,height,click_effect,sound_file,action
+area_menu_start,title,350,280,300,80,particle_sparkle,click_confirm.mp3,start_game
+area_menu_continue,title,350,340,300,80,particle_sparkle,click_confirm.mp3,continue_game
+area_menu_options,title,350,400,300,80,particle_glow,click_soft.mp3,open_options
+area_menu_exit,title,350,460,300,80,particle_fade,click_soft.mp3,exit_game
+area_char_talk,dialog,100,150,150,300,ripple_effect,click_gentle.mp3,advance_dialog
+area_char_protag,dialog,550,150,150,300,ripple_effect,click_gentle.mp3,show_status
+area_battle_enemy,battle,300,100,200,200,flash_red,click_target.mp3,select_target
+area_battle_skills,battle,50,450,600,100,glow_blue,click_skill.mp3,open_skills

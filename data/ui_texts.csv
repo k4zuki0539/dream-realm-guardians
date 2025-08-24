@@ -1,0 +1,28 @@
+﻿text_id,category,text_jp,text_en,font_size,color,usage_context
+game_title,title,裏路地の誘惑,Dream Realm Guardians,48,#FFD700,main_title
+game_subtitle,title,〜 嬢たちの禁断ゲーム 〜,~ Little Heroes Who Protect Dreams ~,24,#FFFFFF,subtitle
+menu_new_game,menu,新しいゲーム,New Game,20,#FFFFFF,main_menu
+menu_continue,menu,続きから,Continue,20,#FFFFFF,main_menu
+menu_options,menu,設定,Options,20,#FFFFFF,main_menu
+menu_exit,menu,終了,Exit,20,#FFFFFF,main_menu
+battle_attack,battle,攻撃,Attack,16,#FFFFFF,battle_menu
+battle_defend,battle,防御,Defend,16,#FFFFFF,battle_menu
+battle_items,battle,アイテム,Items,16,#FFFFFF,battle_menu
+battle_memory,battle,記憶スキル,Memory Skill,16,#FFFFFF,battle_menu
+dialog_next,dialog,次へ,Next,14,#FFFFFF,dialog_control
+dialog_skip,dialog,スキップ,Skip,14,#FFFFFF,dialog_control
+status_hp,status,HP,HP,14,#32CD32,status_display
+status_mp,status,MP,MP,14,#1E90FF,status_display
+status_level,status,レベル,Level,14,#FFD700,status_display
+status_hope,emotion,希望,Hope,12,#FFD700,emotion_display
+status_empathy,emotion,共感,Empathy,12,#FF69B4,emotion_display
+status_despair,emotion,絶望,Despair,12,#9370DB,emotion_display
+status_loneliness,emotion,孤独,Loneliness,12,#696969,emotion_display
+ending_hope,ending,希望の光エンディング,Hope's Light Ending,28,#FFD700,ending_title
+ending_empathy,ending,共感の絆エンディング,Empathy's Bond Ending,28,#FF69B4,ending_title
+ending_introspection,ending,内省の道エンディング,Path of Introspection Ending,28,#87CEEB,ending_title
+ending_renewal,ending,再生の始まりエンディング,Renewal's Beginning Ending,28,#98FB98,ending_title
+system_save,system,セーブしました,Game Saved,16,#32CD32,system_message
+system_load,system,ロードしました,Game Loaded,16,#32CD32,system_message
+system_error,system,エラーが発生しました,An Error Occurred,16,#FF4500,system_message
+achievement_unlock,achievement,実績解除！,Achievement Unlocked!,18,#FFD700,achievement_message

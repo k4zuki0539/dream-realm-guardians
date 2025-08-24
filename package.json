@@ -1,0 +1,112 @@
+{
+  "name": "dream-realm-guardians",
+  "version": "1.0.0",
+  "description": "夢境の守護者 - Dream Realm Guardians: ターン制バトルシミュレーション RPG",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "build-win": "electron-builder --win",
+    "build-mac": "electron-builder --mac",
+    "build-linux": "electron-builder --linux",
+    "pack": "electron-builder --dir",
+    "dist": "npm run build",
+    "postinstall": "electron-builder install-app-deps",
+    "test": "echo \"No tests specified\" && exit 0",
+    "lint": "echo \"No linting configured\" && exit 0"
+  },
+  "keywords": [
+    "game",
+    "rpg",
+    "simulation",
+    "electron",
+    "turn-based",
+    "battle",
+    "japanese",
+    "dream",
+    "guardians"
+  ],
+  "author": {
+    "name": "Dream Realm Guardians Development Team",
+    "email": "dev@dreamrealmguardians.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/dreamrealmguardians/dream-realm-guardians",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dreamrealmguardians/dream-realm-guardians.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dreamrealmguardians/dream-realm-guardians/issues"
+  },
+  "devDependencies": {
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4"
+  },
+  "dependencies": {},
+  "build": {
+    "appId": "com.dreamrealmguardians.app",
+    "productName": "夢境の守護者",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "**/*",
+      "!node_modules",
+      "!dist",
+      "!build",
+      "!.git",
+      "!README.md",
+      "!.gitignore",
+      "!*.log"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "assets/icons/icon.ico",
+      "artifactName": "${productName}-${version}-win-${arch}.${ext}"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["x64", "arm64"]
+        }
+      ],
+      "icon": "assets/icons/icon.icns",
+      "category": "public.app-category.games",
+      "artifactName": "${productName}-${version}-mac-${arch}.${ext}"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "assets/icons/icon.png",
+      "category": "Game",
+      "artifactName": "${productName}-${version}-linux-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "assets/icons/icon.ico",
+      "uninstallerIcon": "assets/icons/icon.ico",
+      "installerHeaderIcon": "assets/icons/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "夢境の守護者"
+    }
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

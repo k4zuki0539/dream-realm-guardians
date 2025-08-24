@@ -1,0 +1,8 @@
+﻿enemy_id,name_jp,hp,attack_power,weakness_emotion,resist_emotion,special_ability
+nightmare_despair,絶望の影,120,35,hope,despair,絶望の波動
+nightmare_anger,怒りの炎,100,45,empathy,anger,炎の怒り
+nightmare_fear,恐怖の霧,80,25,courage,fear,恐怖の幻影
+nightmare_loneliness,孤独の氷,90,30,empathy,loneliness,氷の孤独
+nightmare_regret,後悔の鎖,110,40,hope,regret,後悔の呪縛
+nightmare_envy,嫉妬の棘,95,38,compassion,envy,嫉妬の毒
+nightmare_final_boss,絶望の王,200,50,hope,all_negative,全ての絶望

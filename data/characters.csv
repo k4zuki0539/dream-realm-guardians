@@ -1,0 +1,7 @@
+﻿char_id,name_jp,name_en,age,personality,description,voice_type,base_image
+protag,夢野希,Nozomi Yumeno,16,内向的で優しい,夢境の守護者見習い,soft_female,char_nozomi_base.png
+lucid,ルシード,Lucid,???,神秘的,記憶の案内人,calm_male,char_lucid_base.png
+nightmare_1,絶望の影,Shadow of Despair,???,破滅的,失恋から生まれた悪夢,deep_distorted,enemy_despair.png
+nightmare_2,怒りの炎,Flame of Anger,???,爆発的,裏切りから生まれた悪夢,harsh_fire,enemy_anger.png
+nightmare_3,恐怖の霧,Mist of Fear,???,不安定,トラウマから生まれた悪夢,whisper_cold,enemy_fear.png
+nightmare_4,孤独の氷,Ice of Loneliness,???,冷漠,孤立感から生まれた悪夢,empty_echo,enemy_loneliness.png

@@ -1,0 +1,11 @@
+﻿anim_id,target_element,animation_type,duration_ms,easing,loop,trigger_condition
+sparkle_menu,btn_new_game,sparkle_particles,2000,ease_in_out,true,hover
+level_up_glow,character_portrait,radial_glow,1500,ease_out,false,level_change
+text_typewriter,dialog_text,typewriter,50,linear,false,dialog_start
+battle_hit_effect,enemy_sprite,shake_flash,300,ease_out,false,damage_taken
+emory_skill_glow,skill_button,pulse_glow,1000,ease_in_out,true,skill_ready
+health_bar_change,health_bar,slide_fill,800,ease_in,false,health_change
+emotion_particle,emotion_icon,float_particles,1200,ease_out,false,emotion_change
+screen_transition,screen_overlay,fade_transition,1000,ease_in_out,false,scene_change
+button_press,interactive_button,scale_bounce,200,ease_out,false,button_click
+character_breathing,character_sprite,subtle_float,4000,ease_in_out,true,always

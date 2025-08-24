@@ -1,0 +1,11 @@
+﻿flag_id,flag_name,initial_value,description,related_scene
+rescued_count,救済した人数,0,エンディング分岐に影響,all_battles
+hope_level,希望値,0,主人公の希望の強さ,all_scenes
+empathy_level,共感値,0,他者への共感度,all_scenes
+despair_level,絶望値,0,心の闇の深さ,all_scenes
+loneliness_level,孤独値,0,孤立感の強さ,all_scenes
+first_battle,初回戦闘完了,false,チュートリアル管理,battle_tutorial
+lucid_met,ルシード初遭遇,false,ストーリー進行管理,intro_2
+skill_combined,初回スキル合成,false,システム習得管理,battle_2
+level_2_reached,レベル2到達,false,成長管理,character_growth
+final_boss_defeated,最終ボス撃破,false,エンディング条件,battle_3

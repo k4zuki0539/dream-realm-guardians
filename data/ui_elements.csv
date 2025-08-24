@@ -1,0 +1,11 @@
+﻾lement_id,image_file,x_pos,y_pos,width,height,z_index,click_sound,hover_effect
+btn_new_game,btn_new_game.png,400,300,200,50,10,click_menu.mp3,glow_blue
+btn_continue,btn_continue.png,400,360,200,50,10,click_menu.mp3,glow_blue
+btn_options,btn_options.png,400,420,200,50,10,click_menu.mp3,glow_blue
+btn_exit,btn_exit.png,400,480,200,50,10,click_menu.mp3,glow_red
+btn_battle_attack,btn_attack.png,100,500,120,40,5,click_battle.mp3,glow_gold
+btn_battle_defend,btn_defend.png,240,500,120,40,5,click_battle.mp3,glow_silver
+btn_battle_items,btn_items.png,380,500,120,40,5,click_battle.mp3,glow_green
+btn_memory_skill,btn_memory.png,520,500,120,40,5,click_skill.mp3,glow_purple
+btn_next_dialog,btn_next.png,650,550,100,30,8,click_soft.mp3,fade_in
+btn_skip_dialog,btn_skip.png,750,550,80,30,8,click_soft.mp3,fade_in

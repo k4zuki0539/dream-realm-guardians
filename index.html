@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>夢境の守護者 - Dream Realm Guardians</title>
+    <link rel="stylesheet" href="styles/game.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="loading-screen">
+        <div class="loading-content">
+            <h2 id="loading-title">夢境の守護者</h2>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <p>記憶を読み込み中...</p>
+        </div>
+    </div>
+
+    <div id="game-container">
+        <!-- タイトル画面 -->
+        <div id="title-screen" class="screen active">
+            <div class="title-background">
+                <div class="stars-animation"></div>
+                <div class="memory-fragments"></div>
+            </div>
+            <div class="title-content">
+                <h1 class="game-title">
+                    <span class="title-moon">🌙</span>
+                    <span class="title-text" id="main-title">夢境の守護者</span>
+                    <span class="title-moon">🌙</span>
+                </h1>
+                <div class="title-subtitle">Dream Realm Guardians</div>
+                <div class="menu-buttons">
+                    <button id="btn-new-game" class="menu-button" data-action="start_game">
+                        <span class="btn-icon">✨</span>
+                        <span class="btn-text">新しい夢へ</span>
+                    </button>
+                    <button id="btn-continue" class="menu-button" data-action="continue_game">
+                        <span class="btn-icon">📖</span>
+                        <span class="btn-text">記憶を辿る</span>
+                    </button>
+                    <button id="btn-options" class="menu-button" data-action="open_options">
+                        <span class="btn-icon">⚙️</span>
+                        <span class="btn-text">設定</span>
+                    </button>
+                    <button id="btn-exit" class="menu-button" data-action="exit_game">
+                        <span class="btn-icon">🌅</span>
+                        <span class="btn-text">覚醒</span>
+                    </button>
+                </div>
+            </div>
+            <div class="character-display">
+                <img id="title-character" src="assets/characters/nozomi_level1_normal.png" alt="主人公" class="character-portrait breathing">
+                <div class="emotion-indicator">期待・不安</div>
+            </div>
+            <div class="volume-control">
+                <label for="volume-slider">音量</label>
+                <input type="range" id="volume-slider" min="0" max="100" value="70">
+            </div>
+        </div>
+
+        <!-- 会話シーン画面 -->
+        <div id="dialog-screen" class="screen">
+            <div class="dialog-background">
+                <img id="dialog-bg" src="assets/backgrounds/bg_school_fantasy.png" alt="背景">
+            </div>
+            <div class="character-container">
+                <div class="character-left">
+                    <img id="character-npc" src="assets/characters/char_lucid_base.png" alt="NPC" class="character-sprite">
+                    <div class="emotion-icon" id="npc-emotion">😌</div>
+                </div>
+                <div class="character-right">
+                    <img id="character-protag" src="assets/characters/nozomi_level1_normal.png" alt="主人公" class="character-sprite">
+                    <div class="emotion-icon" id="protag-emotion">😕</div>
+                </div>
+            </div>
+            <div class="dialog-box">
+                <div class="dialog-content">
+                    <div id="dialog-text" class="dialog-text-content"></div>
+                    <div class="dialog-controls">
+                        <button id="btn-next-dialog" class="dialog-btn">▶️ 次へ</button>
+                        <button id="btn-skip-dialog" class="dialog-btn skip-btn">Skip</button>
+                        <button id="btn-auto-dialog" class="dialog-btn auto-btn">Auto</button>
+                    </div>
+                </div>
+            </div>
+            <div class="status-bar">
+                <div class="memory-gauge">
+                    <label>記憶</label>
+                    <div class="gauge">
+                        <div class="gauge-fill" id="memory-gauge-fill"></div>
+                    </div>
+                </div>
+                <div class="emotion-display">
+                    <div class="emotion-status">
+                        <span class="emotion-label">希望</span>
+                        <span id="hope-value">0</span>
+                    </div>
+                    <div class="emotion-status">
+                        <span class="emotion-label">共感</span>
+                        <span id="empathy-value">0</span>
+                    </div>
+                    <div class="emotion-status">
+                        <span class="emotion-label">絶望</span>
+                        <span id="despair-value">0</span>
+                    </div>
+                    <div class="emotion-status">
+                        <span class="emotion-label">孤独</span>
+                        <span id="loneliness-value">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- メインゲーム画面（バトル） -->
+        <div id="battle-screen" class="screen">
+            <div class="battle-background">
+                <img id="battle-bg" src="assets/backgrounds/bg_nightmare_realm.png" alt="戦闘背景">
+            </div>
+            <div class="battle-hud">
+                <div class="enemy-info">
+                    <div class="enemy-sprite-container">
+                        <img id="enemy-sprite" src="assets/enemies/nightmare_despair.png" alt="敵" class="enemy-sprite">
+                        <div class="enemy-status">
+                            <div class="enemy-name">絶望の影</div>
+                            <div class="enemy-hp-bar">
+                                <div class="hp-bar">
+                                    <div class="hp-fill" id="enemy-hp-fill"></div>
+                                </div>
+                                <span class="hp-text">HP: <span id="enemy-hp">120</span>/<span id="enemy-max-hp">120</span></span>
+                            </div>
+                            <div class="enemy-emotion">感情: <span id="enemy-emotion-state">絶望MAX</span></div>
+                            <div class="enemy-weakness">弱点: <span id="enemy-weakness">希望</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="battle-actions">
+                    <div class="action-panel memory-skills">
+                        <h3>記憶スキル選択</h3>
+                        <div class="skill-grid">
+                            <button class="skill-button" data-skill="mem_childhood">
+                                <span class="skill-icon">💭</span>
+                                <span class="skill-name">幼い日の記憶</span>
+                            </button>
+                            <button class="skill-button" data-skill="mem_success">
+                                <span class="skill-icon">⭐</span>
+                                <span class="skill-name">成功の思い出</span>
+                            </button>
+                            <button class="skill-button" data-skill="mem_family">
+                                <span class="skill-icon">🏠</span>
+                                <span class="skill-name">家族の絆</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="action-panel emotion-resonance">
+                        <h3>感情共鳴</h3>
+                        <div class="emotion-buttons">
+                            <button class="emotion-button" data-emotion="hope">
+                                <span class="emotion-icon">💝</span>
+                                <span class="emotion-name">希望</span>
+                            </button>
+                            <button class="emotion-button" data-emotion="empathy">
+                                <span class="emotion-icon">💖</span>
+                                <span class="emotion-name">共感</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="action-panel items">
+                        <h3>アイテム</h3>
+                        <div class="item-grid">
+                            <button class="item-button" data-item="hope_fragment">
+                                <span class="item-icon">🌟</span>
+                                <span class="item-name">希望の欠片</span>
+                            </button>
+                            <button class="item-button" data-item="memory_crystal">
+                                <span class="item-icon">🔮</span>
+                                <span class="item-name">記憶結晶</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="battle-status">
+                    <div class="turn-info">
+                        <span>ターン: <span id="current-turn">1</span>/10</span>
+                        <span>行動力: <span id="action-points">●●○</span></span>
+                        <span>記憶力: <span id="memory-power">85</span>/100</span>
+                    </div>
+                </div>
+                <div class="battle-log">
+                    <div class="log-content" id="battle-log-content">
+                        <div class="log-entry">戦闘開始！</div>
+                    </div>
+                </div>
+                <div class="player-status">
+                    <div class="player-info">
+                        <img id="player-sprite" src="assets/characters/nozomi_level1_normal.png" alt="主人公" class="player-battle-sprite">
+                        <div class="player-stats">
+                            <div class="player-name">夢野 希</div>
+                            <div class="player-hp-bar">
+                                <div class="hp-bar">
+                                    <div class="hp-fill" id="player-hp-fill"></div>
+                                </div>
+                                <span class="hp-text">HP: <span id="player-hp">100</span>/<span id="player-max-hp">100</span></span>
+                            </div>
+                            <div class="emotion-stats">
+                                <span>希望: <span id="battle-hope">0</span></span>
+                                <span>共感: <span id="battle-empathy">0</span></span>
+                                <span>絶望: <span id="battle-despair">0</span></span>
+                                <span>孤独: <span id="battle-loneliness">0</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- エンディング画面 -->
+        <div id="ending-screen" class="screen">
+            <div class="ending-background">
+                <img id="ending-bg" src="assets/backgrounds/bg_sunrise.png" alt="エンディング背景">
+            </div>
+            <div class="ending-content">
+                <div class="ending-header">
+                    <h1 id="ending-title">🌅 希望の光エンディング 🌅</h1>
+                </div>
+                <div class="ending-character">
+                    <img id="ending-character" src="assets/characters/nozomi_level5_normal.png" alt="エンディング主人公" class="ending-character-sprite">
+                </div>
+                <div class="ending-text">
+                    <p id="ending-message">
+                        多くの人の心を救い、私も成長することができました。<br>
+                        夢境の守護者として、これからも人々の希望を守り続けます。
+                    </p>
+                </div>
+                <div class="achievement-display">
+                    <div class="achievement-rate">
+                        達成率: <span id="achievement-stars">★★★★★</span>
+                        <span id="achievement-text">(希望値80以上、救済率90%以上)</span>
+                    </div>
+                </div>
+                <div class="ending-controls">
+                    <button id="btn-replay" class="ending-button">
+                        <span class="btn-icon">🔄</span>
+                        <span class="btn-text">もう一度プレイする</span>
+                    </button>
+                    <button id="btn-to-menu" class="ending-button">
+                        <span class="btn-icon">🏠</span>
+                        <span class="btn-text">メニューに戻る</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 設定画面 -->
+        <div id="options-screen" class="screen">
+            <div class="options-content">
+                <h2>設定</h2>
+                <div class="settings-panel">
+                    <div class="setting-group">
+                        <label>BGM音量</label>
+                        <input type="range" id="bgm-volume" min="0" max="100" value="70">
+                    </div>
+                    <div class="setting-group">
+                        <label>効果音音量</label>
+                        <input type="range" id="se-volume" min="0" max="100" value="80">
+                    </div>
+                    <div class="setting-group">
+                        <label>テキスト速度</label>
+                        <select id="text-speed">
+                            <option value="slow">遅い</option>
+                            <option value="normal" selected>普通</option>
+                            <option value="fast">速い</option>
+                        </select>
+                    </div>
+                    <div class="setting-group">
+                        <label>画面サイズ</label>
+                        <select id="screen-size">
+                            <option value="small">小</option>
+                            <option value="medium" selected>中</option>
+                            <option value="large">大</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="save-data-management">
+                    <h3>セーブデータ管理</h3>
+                    <button id="btn-export-save" class="options-button">データエクスポート</button>
+                    <button id="btn-import-save" class="options-button">データインポート</button>
+                    <button id="btn-delete-save" class="options-button danger">データ削除</button>
+                </div>
+                <div class="options-controls">
+                    <button id="btn-close-options" class="options-button">閉じる</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 音楽プレーヤー -->
+    <div id="audio-manager" class="hidden">
+        <audio id="bgm-player" loop></audio>
+        <audio id="se-player"></audio>
+        <audio id="voice-player"></audio>
+    </div>
+
+    <!-- パーティクルシステム -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- スクリプト -->
+    <script src="js/csvLoader.js"></script>
+    <script src="js/audioManager.js"></script>
+    <script src="js/particleSystem.js"></script>
+    <script src="js/gameEngine.js"></script>
+    <script src="js/dialogSystem.js"></script>
+    <script src="js/battleSystem.js"></script>
+    <script src="js/endingSystem.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

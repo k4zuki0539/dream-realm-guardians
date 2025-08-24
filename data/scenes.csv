@@ -1,0 +1,11 @@
+﻿scene_id,scene_name,background_image,bgm_file,transition_type,duration
+title,タイトル画面,bg_title_stars.png,bgm_mystical.mp3,fade,2000
+intro_1,物語の始まり,bg_school_fantasy.png,bgm_gentle.mp3,slide,1500
+intro_2,ルシードとの出会い,bg_dream_realm.png,bgm_mysterious.mp3,fade,1800
+battle_1,最初の戦闘,bg_nightmare_realm.png,bgm_battle_1.mp3,flash,500
+battle_2,2度目の戦闘,bg_nightmare_deeper.png,bgm_battle_2.mp3,flash,500
+battle_3,終盤の戦闘,bg_nightmare_final.png,bgm_battle_final.mp3,flash,800
+ending_hope,希望の光,bg_sunrise.png,bgm_hope_finale.mp3,light,3000
+ending_empathy,共感の絆,bg_warm_connection.png,bgm_empathy_finale.mp3,warm,3000
+ending_introspection,内省の道,bg_moonlight.png,bgm_introspection_finale.mp3,soft,3000
+ending_renewal,再生の始まり,bg_new_dawn.png,bgm_renewal_finale.mp3,bright,3000

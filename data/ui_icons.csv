@@ -1,0 +1,11 @@
+﻿icon_id,image_file,tooltip_text,category,size,glow_color
+icon_hope,icon_hope.png,希望の力,emotion,32,gold
+icon_empathy,icon_empathy.png,共感の力,emotion,32,pink
+icon_despair,icon_despair.png,絶望の闇,emotion,32,purple
+icon_loneliness,icon_loneliness.png,孤独の冷たさ,emotion,32,blue
+icon_memory,icon_memory.png,記憶の欠片,item,24,blue
+icon_heal,icon_heal.png,回復アイテム,item,24,green
+icon_crystal,icon_crystal.png,記憶結晶,item,28,rainbow
+icon_level,icon_level.png,レベル,status,20,yellow
+icon_hp,icon_hp.png,体力,status,20,red
+icon_mp,icon_mp.png,記憶力,status,20,blue

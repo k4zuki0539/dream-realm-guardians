@@ -1,0 +1,7 @@
+﻿panel_id,background_image,x_pos,y_pos,width,height,opacity,border_style,animation
+dialog_box,panel_dialog.png,50,450,700,150,0.9,rounded,slide_up
+battle_hud,panel_battle_hud.png,0,0,800,100,0.8,none,fade_in
+status_panel,panel_status.png,600,150,180,300,0.85,gradient,none
+menu_panel,panel_menu.png,300,200,400,300,0.9,rounded,fade_in
+inventory_panel,panel_inventory.png,200,100,400,400,0.88,gradient,slide_down
+settings_panel,panel_settings.png,250,150,300,250,0.92,rounded,fade_in

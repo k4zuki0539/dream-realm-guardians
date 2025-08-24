@@ -1,0 +1,11 @@
+﻽ialogue_id,scene_id,character_id,text_jp,emotion,voice_file,delay_ms,choice_flag
+dlg_001,intro_1,protag,「ここは...夢の世界？」,confusion,voice_001.mp3,50,false
+dlg_002,intro_1,lucid,「君が新しい守護者候補だね。」,gentle,voice_002.mp3,40,false
+dlg_003,intro_2,protag,「私に...人を救えるの？」,anxiety,voice_003.mp3,60,true
+dlg_004,intro_2,lucid,「記憶の力を使えば、必ずできるよ。」,encouraging,voice_004.mp3,45,false
+dlg_005,battle_1,protag,「あの悲しみ...私も感じたことがある。」,empathy,voice_005.mp3,55,false
+dlg_006,battle_1,nightmare_1,「誰も....誰も理解してくれない...」,despair,voice_006.mp3,70,false
+dlg_007,battle_2,protag,「怒りだけでは何も解決しない。」,determined,voice_007.mp3,50,false
+dlg_008,battle_3,protag,「みんなの心を救いたい。それが私の道。」,resolve,voice_008.mp3,60,false
+dlg_009,ending_hope,protag,「多くの人の心を救い、私も成長できました。」,joy,voice_009.mp3,55,false
+dlg_010,ending_empathy,protag,「一人ではできないことも、みんなと一緒なら...」,warmth,voice_010.mp3,50,false

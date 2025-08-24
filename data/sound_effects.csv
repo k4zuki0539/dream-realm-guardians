@@ -1,0 +1,13 @@
+﻿sound_id,file_name,volume,category,loop_flag,fade_in_ms,fade_out_ms
+bgm_title,mystical_dreams.mp3,0.7,background,true,2000,1500
+bgm_gentle,gentle_memories.mp3,0.6,background,true,1500,1000
+bgm_battle_1,first_encounter.mp3,0.8,background,true,500,800
+bgm_battle_final,final_confrontation.mp3,0.9,background,true,800,1200
+bgm_hope_finale,symphony_of_hope.mp3,0.8,background,true,2000,3000
+se_click,ui_click.mp3,0.5,interface,false,0,0
+se_battle_hit,battle_impact.mp3,0.8,battle,false,0,100
+se_skill_cast,skill_memory.mp3,0.7,battle,false,0,200
+se_level_up,level_up_chime.mp3,0.9,interface,false,0,0
+se_healing,healing_light.mp3,0.6,battle,false,0,150
+voice_protag_1,nozomi_voice_01.mp3,0.9,voice,false,0,0
+voice_lucid_1,lucid_voice_01.mp3,0.8,voice,false,0,0

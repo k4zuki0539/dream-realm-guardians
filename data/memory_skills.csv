@@ -1,0 +1,13 @@
+﻿skill_id,name_jp,name_en,base_power,emotion_type,mp_cost,description,unlock_condition
+mem_childhood,幼い日の記憶,Childhood Memory,30,hope,10,温かい記憶で心を癒す,level_1
+mem_success,成功の思い出,Success Memory,40,confidence,15,達成感で勇気を与える,level_2
+mem_family,家族の絆,Family Bond,25,empathy,12,家族の愛で守りを固める,level_1
+mem_friendship,友情の記憶,Friendship Memory,35,empathy,14,友達との絆で力を得る,level_2
+mem_achievement,達成の喜び,Achievement Joy,45,confidence,18,成し遂げた喜びで勇気を与える,level_3
+mem_first_love,初恋の記憶,First Love Memory,40,empathy,16,初恋の甘酸っぱさで心を温める,level_3
+mem_courage,勇気の記憶,Memory of Courage,50,courage,20,困難を乗り越えた勇気,level_4
+mem_sacrifice,犠牲の記憶,Memory of Sacrifice,35,empathy,15,誰かのために尽くした思い,level_4
+mem_hope_light,希望の光,Light of Hope,60,hope,25,絶望を打ち破る希望の力,level_5
+mem_compassion,慈愛の記憶,Memory of Compassion,45,empathy,18,他者への深い思いやり,level_5
+mem_combined_warmth,温かな帰る場所,Warm Home,80,hope,30,幼い日の記憶+家族の絆の合成,combination
+mem_shared_dream,共に歩んだ道,Shared Path,85,empathy,32,成功の思い出+友情の記憶の合成,combination

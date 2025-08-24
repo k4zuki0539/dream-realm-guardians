@@ -1,0 +1,8 @@
+﻿char_id,level,outfit_image,face_expression,special_effects,unlock_condition
+protag,1,outfit_school_uniform.png,anxious,none,game_start
+protag,2,outfit_emblem_uniform.png,curious,faint_glow,hope_20
+protag,3,outfit_apprentice_robe.png,determined,blue_aura,hope_40
+protag,4,outfit_guardian_robe.png,confident,golden_aura,hope_60
+protag,5,outfit_master_guardian.png,compassionate,rainbow_aura,hope_80
+lucid,1,outfit_guide_basic.png,calm,soft_glow,game_start
+lucid,2,outfit_guide_advanced.png,wise,bright_glow,story_progress

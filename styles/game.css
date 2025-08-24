@@ -1,0 +1,1135 @@
+/* 夢境の守護者 - Dream Realm Guardians CSS */
+
+/* リセット & 基本設定 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #FFD700;
+    --secondary-color: #4169E1;
+    --accent-color: #FF69B4;
+    --dark-bg: #1a1a2e;
+    --mid-bg: #16213e;
+    --light-bg: #0f3460;
+    --text-color: #FFFFFF;
+    --text-shadow: #000080;
+    --danger-color: #FF4500;
+    --success-color: #32CD32;
+    --hope-color: #FFD700;
+    --empathy-color: #FF69B4;
+    --despair-color: #9370DB;
+    --loneliness-color: #4682B4;
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: linear-gradient(135deg, var(--dark-bg), var(--mid-bg), var(--light-bg));
+    color: var(--text-color);
+    overflow: hidden;
+    user-select: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ローディング画面 */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, var(--dark-bg), var(--mid-bg));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-content {
+    text-align: center;
+    color: var(--text-color);
+}
+
+.loading-content h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+    text-shadow: 2px 2px 4px var(--text-shadow);
+}
+
+.loading-bar {
+    width: 300px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 1rem auto;
+}
+
+.loading-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    width: 0%;
+    animation: loading-progress 3s ease-in-out forwards;
+}
+
+@keyframes loading-progress {
+    to { width: 100%; }
+}
+
+/* メインコンテナ */
+#game-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--dark-bg), var(--mid-bg), var(--light-bg));
+}
+
+/* パーティクルキャンバス */
+#particle-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+/* 画面共通スタイル */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+    z-index: 1;
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 10;
+}
+
+/* タイトル画面 */
+#title-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.title-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(65, 105, 225, 0.3), rgba(26, 26, 46, 0.9));
+    overflow: hidden;
+}
+
+.stars-animation {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+        radial-gradient(2px 2px at 40px 70px, #fff, transparent),
+        radial-gradient(1px 1px at 90px 40px, #eee, transparent);
+    background-repeat: repeat;
+    background-size: 100px 100px;
+    animation: stars-twinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes stars-twinkle {
+    from { opacity: 0.3; }
+    to { opacity: 0.8; }
+}
+
+.memory-fragments {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="%23FFD700" opacity="0.6"/></svg>');
+    animation: fragments-float 6s ease-in-out infinite;
+}
+
+@keyframes fragments-float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+.title-content {
+    z-index: 2;
+    max-width: 600px;
+    padding: 2rem;
+}
+
+.game-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    text-shadow: 3px 3px 6px var(--text-shadow);
+    animation: title-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes title-glow {
+    from { text-shadow: 3px 3px 6px var(--text-shadow); }
+    to { text-shadow: 3px 3px 20px var(--primary-color); }
+}
+
+.title-moon {
+    display: inline-block;
+    animation: moon-float 4s ease-in-out infinite alternate;
+    margin: 0 1rem;
+}
+
+@keyframes moon-float {
+    from { transform: translateY(0px); }
+    to { transform: translateY(-10px); }
+}
+
+.title-subtitle {
+    font-style: italic;
+    color: var(--secondary-color);
+    margin-bottom: 3rem;
+    font-size: 1.2rem;
+}
+
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.menu-button {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(65, 105, 225, 0.2));
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 1rem 2rem;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    backdrop-filter: blur(10px);
+}
+
+.menu-button:hover {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.4), rgba(65, 105, 225, 0.4));
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+    animation: button-glow 1s ease-in-out infinite alternate;
+}
+
+@keyframes button-glow {
+    from { box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3); }
+    to { box-shadow: 0 10px 35px rgba(255, 215, 0, 0.6); }
+}
+
+.menu-button:active {
+    transform: scale(0.98);
+}
+
+.btn-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.btn-text {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.character-display {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+}
+
+.character-portrait {
+    width: 200px;
+    height: auto;
+    filter: drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.5));
+}
+
+.breathing {
+    animation: character-breathing 4s ease-in-out infinite;
+}
+
+@keyframes character-breathing {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+.emotion-indicator {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+}
+
+.volume-control {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 2;
+}
+
+.volume-control label {
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.volume-control input[type="range"] {
+    width: 100px;
+    accent-color: var(--primary-color);
+}
+
+/* 会話シーン画面 */
+#dialog-screen {
+    display: flex;
+    flex-direction: column;
+}
+
+.dialog-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.dialog-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7) blur(1px);
+}
+
+.character-container {
+    position: absolute;
+    width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 2rem;
+    z-index: 1;
+}
+
+.character-left, .character-right {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.character-sprite {
+    width: 300px;
+    height: auto;
+    filter: drop-shadow(4px 4px 12px rgba(0, 0, 0, 0.8));
+    transition: transform 0.3s ease;
+}
+
+.character-sprite.speaking {
+    transform: scale(1.05);
+    filter: drop-shadow(4px 4px 20px var(--primary-color));
+}
+
+.emotion-icon {
+    position: absolute;
+    top: -2rem;
+    font-size: 2rem;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--primary-color);
+    animation: emotion-pulse 2s ease-in-out infinite;
+}
+
+@keyframes emotion-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.dialog-box {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(180deg, 
+        rgba(0, 0, 0, 0.9) 0%, 
+        rgba(26, 26, 46, 0.95) 100%);
+    border-top: 3px solid var(--primary-color);
+    padding: 2rem;
+    z-index: 2;
+    backdrop-filter: blur(10px);
+}
+
+.dialog-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.dialog-text-content {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    min-height: 4rem;
+    color: var(--text-color);
+    text-shadow: 1px 1px 2px var(--text-shadow);
+}
+
+.dialog-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.dialog-btn {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(65, 105, 225, 0.3));
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.dialog-btn:hover {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.5), rgba(65, 105, 225, 0.5));
+    transform: scale(1.05);
+}
+
+.status-bar {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    right: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+    z-index: 3;
+}
+
+.memory-gauge {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.memory-gauge label {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.gauge {
+    width: 150px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.gauge-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+    transition: width 0.5s ease;
+}
+
+.emotion-display {
+    display: flex;
+    gap: 2rem;
+}
+
+.emotion-status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.emotion-label {
+    font-size: 0.8rem;
+    color: var(--text-color);
+}
+
+#hope-value { color: var(--hope-color); }
+#empathy-value { color: var(--empathy-color); }
+#despair-value { color: var(--despair-color); }
+#loneliness-value { color: var(--loneliness-color); }
+
+/* バトル画面 */
+#battle-screen {
+    display: flex;
+    flex-direction: column;
+}
+
+.battle-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.battle-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.battle-hud {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-areas: 
+        "enemy enemy enemy"
+        "actions actions actions"
+        "status log player";
+    grid-template-rows: 1fr 200px 150px;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    z-index: 1;
+}
+
+.enemy-info {
+    grid-area: enemy;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 2rem;
+}
+
+.enemy-sprite-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.enemy-sprite {
+    width: 250px;
+    height: auto;
+    filter: drop-shadow(6px 6px 20px rgba(0, 0, 0, 0.8));
+    animation: enemy-idle 3s ease-in-out infinite alternate;
+}
+
+@keyframes enemy-idle {
+    from { transform: translateY(0px) scale(1); }
+    to { transform: translateY(-10px) scale(1.02); }
+}
+
+.enemy-sprite.damaged {
+    animation: enemy-damage 0.5s ease-out;
+}
+
+@keyframes enemy-damage {
+    0%, 100% { transform: translateX(0px); filter: hue-rotate(0deg); }
+    25% { transform: translateX(-10px); filter: hue-rotate(180deg); }
+    75% { transform: translateX(10px); filter: hue-rotate(180deg); }
+}
+
+.enemy-status {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--danger-color);
+    border-radius: 10px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+.enemy-name {
+    color: var(--danger-color);
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.hp-bar {
+    width: 200px;
+    height: 15px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0.5rem auto;
+}
+
+.hp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--danger-color), var(--success-color));
+    transition: width 0.8s ease;
+}
+
+.battle-actions {
+    grid-area: actions;
+    display: flex;
+    gap: 1rem;
+}
+
+.action-panel {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+}
+
+.action-panel h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.skill-grid, .emotion-buttons, .item-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.skill-button, .emotion-button, .item-button {
+    background: linear-gradient(135deg, rgba(65, 105, 225, 0.3), rgba(255, 215, 0, 0.2));
+    border: 1px solid var(--secondary-color);
+    border-radius: 8px;
+    padding: 0.8rem;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.skill-button:hover, .emotion-button:hover, .item-button:hover {
+    background: linear-gradient(135deg, rgba(65, 105, 225, 0.5), rgba(255, 215, 0, 0.4));
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+}
+
+.skill-button:disabled, .emotion-button:disabled, .item-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.battle-status {
+    grid-area: status;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+}
+
+.turn-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.battle-log {
+    grid-area: log;
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid var(--secondary-color);
+    border-radius: 10px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+    overflow-y: auto;
+}
+
+.log-content {
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+.log-entry {
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-size: 0.85rem;
+    opacity: 0;
+    animation: log-entry-appear 0.5s ease-in-out forwards;
+}
+
+@keyframes log-entry-appear {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.player-status {
+    grid-area: player;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--success-color);
+    border-radius: 10px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+}
+
+.player-info {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.player-battle-sprite {
+    width: 80px;
+    height: auto;
+    filter: drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.8));
+}
+
+.player-stats {
+    flex-grow: 1;
+}
+
+.player-name {
+    color: var(--success-color);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.emotion-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+/* エンディング画面 */
+#ending-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.ending-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.ending-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.8);
+}
+
+.ending-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    padding: 2rem;
+    background: linear-gradient(180deg, 
+        rgba(0, 0, 0, 0.8) 0%, 
+        rgba(26, 26, 46, 0.9) 100%);
+    border: 3px solid var(--primary-color);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+}
+
+.ending-header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    text-shadow: 3px 3px 6px var(--text-shadow);
+    animation: ending-title-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes ending-title-glow {
+    from { text-shadow: 3px 3px 6px var(--text-shadow); }
+    to { text-shadow: 3px 3px 20px var(--primary-color); }
+}
+
+.ending-character-sprite {
+    width: 250px;
+    height: auto;
+    margin: 1rem 0;
+    filter: drop-shadow(4px 4px 15px rgba(255, 215, 0, 0.5));
+    animation: ending-character-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes ending-character-glow {
+    from { filter: drop-shadow(4px 4px 15px rgba(255, 215, 0, 0.5)); }
+    to { filter: drop-shadow(4px 4px 25px rgba(255, 215, 0, 0.8)); }
+}
+
+.ending-text p {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px var(--text-shadow);
+}
+
+.achievement-display {
+    background: rgba(255, 215, 0, 0.2);
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+}
+
+.achievement-rate {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#achievement-stars {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin: 0 1rem;
+    animation: stars-sparkle 2s ease-in-out infinite;
+}
+
+@keyframes stars-sparkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; transform: scale(1.1); }
+}
+
+.ending-controls {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.ending-button {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(65, 105, 225, 0.3));
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 1rem 2rem;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1rem;
+    backdrop-filter: blur(10px);
+}
+
+.ending-button:hover {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.5), rgba(65, 105, 225, 0.5));
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
+}
+
+/* 設定画面 */
+#options-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.options-content {
+    background: linear-gradient(180deg, 
+        rgba(0, 0, 0, 0.9) 0%, 
+        rgba(26, 26, 46, 0.95) 100%);
+    border: 3px solid var(--primary-color);
+    border-radius: 20px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+    backdrop-filter: blur(15px);
+}
+
+.options-content h2 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-family: 'Cinzel', serif;
+}
+
+.settings-panel {
+    margin-bottom: 2rem;
+}
+
+.setting-group {
+    margin-bottom: 1.5rem;
+}
+
+.setting-group label {
+    display: block;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.setting-group input[type="range"] {
+    width: 100%;
+    accent-color: var(--primary-color);
+}
+
+.setting-group select {
+    width: 100%;
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    color: var(--text-color);
+}
+
+.save-data-management {
+    border-top: 2px solid var(--primary-color);
+    padding-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.save-data-management h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.options-button {
+    background: linear-gradient(135deg, rgba(65, 105, 225, 0.3), rgba(255, 215, 0, 0.2));
+    border: 1px solid var(--secondary-color);
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.options-button:hover {
+    background: linear-gradient(135deg, rgba(65, 105, 225, 0.5), rgba(255, 215, 0, 0.4));
+    transform: scale(1.05);
+}
+
+.options-button.danger {
+    border-color: var(--danger-color);
+    background: linear-gradient(135deg, rgba(255, 69, 0, 0.3), rgba(255, 0, 0, 0.2));
+}
+
+.options-button.danger:hover {
+    background: linear-gradient(135deg, rgba(255, 69, 0, 0.5), rgba(255, 0, 0, 0.4));
+}
+
+.options-controls {
+    text-align: center;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 1200px) {
+    .battle-hud {
+        grid-template-areas: 
+            "enemy enemy"
+            "actions actions"
+            "status log"
+            "player player";
+        grid-template-rows: 1fr 200px 100px auto;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    #game-container {
+        transform: scale(0.8);
+        transform-origin: top left;
+        width: 125%;
+        height: 125%;
+    }
+    
+    .game-title {
+        font-size: 2rem;
+    }
+    
+    .menu-buttons {
+        max-width: 300px;
+    }
+    
+    .character-display {
+        left: 1rem;
+        bottom: 1rem;
+    }
+    
+    .character-portrait {
+        width: 150px;
+    }
+    
+    .dialog-text-content {
+        font-size: 1rem;
+    }
+    
+    .battle-hud {
+        grid-template-areas: 
+            "enemy"
+            "actions"
+            "status"
+            "log"
+            "player";
+        grid-template-rows: 1fr auto auto auto auto;
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+    
+    .battle-actions {
+        flex-direction: column;
+    }
+    
+    .action-panel {
+        margin-bottom: 0.5rem;
+    }
+    
+    .ending-content {
+        padding: 1rem;
+    }
+    
+    .ending-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .ending-controls {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #game-container {
+        transform: scale(0.6);
+        width: 167%;
+        height: 167%;
+    }
+    
+    .game-title {
+        font-size: 1.5rem;
+    }
+    
+    .menu-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .dialog-text-content {
+        font-size: 0.9rem;
+        min-height: 3rem;
+    }
+    
+    .character-sprite {
+        width: 200px;
+    }
+    
+    .enemy-sprite {
+        width: 180px;
+    }
+    
+    .ending-character-sprite {
+        width: 180px;
+    }
+}
+
+/* アニメーション & エフェクト */
+.fade-in {
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.slide-up {
+    animation: slideUp 0.8s ease-out;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.scale-bounce {
+    animation: scaleBounce 0.3s ease-out;
+}
+
+@keyframes scaleBounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* スクロールバーのスタイル */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* 印刷時の調整 */
+@media print {
+    #game-container {
+        display: none;
+    }
+}

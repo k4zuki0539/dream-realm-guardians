@@ -1,0 +1,8 @@
+﻿font_id,font_family,font_size,color,shadow_color,shadow_offset,weight,usage
+font_title,serif,36,#FFD700,#000000,2px 2px,bold,title_screen
+font_dialog,sans-serif,18,#FFFFFF,#000080,1px 1px,normal,character_dialog
+font_ui,monospace,14,#CCCCCC,#000000,1px 1px,normal,ui_elements
+font_battle,sans-serif,16,#FFFFFF,#FF0000,1px 1px,bold,battle_text
+font_menu,serif,20,#FFD700,#000000,1px 1px,normal,menu_buttons
+font_status,monospace,12,#FFFFFF,#000000,1px 1px,normal,status_display
+font_ending,serif,24,#FFD700,#000080,2px 2px,bold,ending_text
