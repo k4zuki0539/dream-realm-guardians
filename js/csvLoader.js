@@ -49,6 +49,18 @@ class CSVLoader {
 
             const data = await loadPromise;
             
+            // 特別なファイルのデバッグ情報
+            if (filename === 'ui_texts.csv' && data.length > 0) {
+                console.log('🔍 UI Texts CSV Debug Info:');
+                console.log(`  - Total records: ${data.length}`);
+                const gameTitle = data.find(row => row.text_id === 'game_title');
+                if (gameTitle) {
+                    console.log(`  - Game title found: "${gameTitle.text_jp}"`);
+                } else {
+                    console.warn('  - Game title NOT FOUND in CSV data');
+                }
+            }
+            
             // キャッシュに保存
             if (useCache) {
                 this.cache.set(filename, data);
@@ -70,7 +82,12 @@ class CSVLoader {
      * @private
      */
     async _loadCSVFile(filename) {
-        const response = await fetch(`data/${filename}`);
+        // キャッシュバスターを追加（ブラウザキャッシュ回避）
+        const timestamp = Date.now();
+        const url = `data/${filename}?t=${timestamp}`;
+        
+        console.log(`📥 Loading CSV with cache buster: ${url}`);
+        const response = await fetch(url);
         
         if (!response.ok) {
             throw new Error(`HTTP Error ${response.status}: ${response.statusText}`);

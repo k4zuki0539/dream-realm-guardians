@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>デバッグテスト - 新しいゲームボタン</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #34495e;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .menu-button {
+            background: linear-gradient(135deg, #4169E1, #FFD700);
+            border: none;
+            border-radius: 25px;
+            padding: 15px 30px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            display: block;
+            width: 200px;
+        }
+        
+        .menu-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .console-output {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 15px;
+            white-space: pre-wrap;
+        }
+        
+        .test-button {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .status.success { background: #27ae60; }
+        .status.error { background: #e74c3c; }
+        .status.warning { background: #f39c12; }
+        .status.info { background: #3498db; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 新しいゲームボタン デバッグテスト</h1>
+        
+        <div class="status info" id="status">
+            テスト準備中...
+        </div>
+        
+        <h2>テスト対象ボタン</h2>
+        <button id="btn-new-game" class="menu-button" data-action="start_game">
+            <span class="btn-icon">✨</span>
+            <span class="btn-text">新しいゲーム</span>
+        </button>
+        
+        <h2>テスト制御</h2>
+        <button class="test-button" onclick="testButtonSetup()">ボタン詳細分析</button>
+        <button class="test-button" onclick="debugClickButton()">手動クリック実行</button>
+        <button class="test-button" onclick="setupMenuButtonHandlers()">ハンドラー再設定</button>
+        <button class="test-button" onclick="addBackupButtonHandler()">バックアップハンドラー追加</button>
+        <button class="test-button" onclick="clearConsole()">コンソールクリア</button>
+        
+        <h2>リアルタイムコンソール出力</h2>
+        <div class="console-output" id="console-output">
+            コンソール出力がここに表示されます...
+        </div>
+        
+        <h2>期待される動作</h2>
+        <ol>
+            <li>「新しいゲーム」ボタンをクリック</li>
+            <li>アラートが表示される: "startNewGame()が呼び出されました！"</li>
+            <li>コンソールに詳細なデバッグ情報が出力</li>
+            <li>ネオン演出が開始される（本来の動作）</li>
+        </ol>
+        
+        <h2>テスト結果</h2>
+        <div id="test-results"></div>
+    </div>
+
+    <script>
+        // コンソールのオーバーライド
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        function addToOutput(message, type = 'log') {
+            const output = document.getElementById('console-output');
+            const timestamp = new Date().toLocaleTimeString();
+            let color = '#00ff00';
+            
+            switch(type) {
+                case 'error': color = '#ff4444'; break;
+                case 'warn': color = '#ffaa00'; break;
+                case 'info': color = '#44aaff'; break;
+            }
+            
+            const logLine = `[${timestamp}] ${message}\n`;
+            output.innerHTML += `<span style="color: ${color}">${logLine}</span>`;
+            output.scrollTop = output.scrollHeight;
+        }
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addToOutput(args.join(' '), 'log');
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addToOutput('ERROR: ' + args.join(' '), 'error');
+        };
+        
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            addToOutput('WARN: ' + args.join(' '), 'warn');
+        };
+        
+        // ゲーム関数のモック実装
+        let gameEngine = {
+            resetGameState: function() {
+                console.log('🔄 Mock: Game state reset');
+            },
+            transitionToScene: function(scene) {
+                console.log('🎬 Mock: Transitioning to scene:', scene);
+                return Promise.resolve();
+            }
+        };
+        
+        let gameInitialized = true;
+        let gameInstance = { mock: true };
+        
+        window.neonTransition = {
+            start: function() {
+                console.log('🎬 Mock: Neon transition started');
+                document.getElementById('status').innerHTML = '✅ ネオン演出が開始されました（モック）';
+                document.getElementById('status').className = 'status success';
+            }
+        };
+        
+        // テスト用のstartNewGame関数
+        function startNewGame() {
+            console.log('🎮 ========== START NEW GAME CALLED ==========');
+            console.log('🔍 Function startNewGame() has been executed!');
+            
+            // デバッグ用アラート（ユーザーに確実に伝える）
+            alert('🎮 startNewGame()が呼び出されました！\\nコンソールを確認してください。');
+            
+            console.log('🔍 Debug info:');
+            console.log('  - gameEngine available:', !!gameEngine);
+            console.log('  - gameEngine type:', typeof gameEngine);
+            console.log('  - neonTransition available:', !!window.neonTransition);
+            console.log('  - neonTransition type:', typeof window.neonTransition);
+            console.log('  - gameInitialized flag:', gameInitialized);
+            console.log('  - gameInstance:', gameInstance);
+            console.log('  - Document ready state:', document.readyState);
+            
+            if (gameEngine) {
+                // ゲーム状態をリセット
+                gameEngine.resetGameState();
+                
+                // ネオン演出を開始
+                if (window.neonTransition) {
+                    console.log('🎬 Starting neon transition...');
+                    try {
+                        window.neonTransition.start();
+                        console.log('✅ Neon transition started successfully');
+                    } catch (error) {
+                        console.error('❌ Error starting neon transition:', error);
+                        console.error('❌ Error stack:', error.stack);
+                        alert('❌ ネオン演出でエラーが発生しました。');
+                    }
+                } else {
+                    console.warn('⚠️ Neon transition not available');
+                    alert('⚠️ ネオン演出が利用できません');
+                }
+            } else {
+                console.error('❌ Game engine not available!');
+                alert('❌ ゲームエンジンが利用できません');
+            }
+        }
+        
+        // メニューボタンハンドラー設定
+        function setupMenuButtonHandlers() {
+            console.log('🔧 Setting up menu button handlers...');
+            
+            const newGameBtn = document.getElementById('btn-new-game');
+            console.log('🔍 New game button element:', newGameBtn);
+            
+            if (newGameBtn) {
+                console.log('✅ New game button found, adding event listener');
+                
+                // 既存のリスナーを削除
+                const newBtn = newGameBtn.cloneNode(true);
+                newGameBtn.parentNode.replaceChild(newBtn, newGameBtn);
+                
+                newBtn.addEventListener('click', (event) => {
+                    console.log('🎮 New game button CLICKED!', event);
+                    console.log('🎮 Event details:', {
+                        target: event.target,
+                        currentTarget: event.currentTarget,
+                        type: event.type,
+                        bubbles: event.bubbles
+                    });
+                    
+                    event.preventDefault();
+                    event.stopPropagation();
+                    
+                    console.log('🎮 Calling startNewGame()...');
+                    startNewGame();
+                });
+                
+                console.log('✅ Event listener attached to new game button');
+                document.getElementById('status').innerHTML = '✅ イベントリスナーが設定されました';
+                document.getElementById('status').className = 'status success';
+            } else {
+                console.error('❌ New game button not found!');
+                document.getElementById('status').innerHTML = '❌ ボタンが見つかりません';
+                document.getElementById('status').className = 'status error';
+            }
+        }
+        
+        // バックアップハンドラー
+        function addBackupButtonHandler() {
+            console.log('🛡️ Adding backup button handlers as failsafe...');
+            
+            const newGameBtn = document.getElementById('btn-new-game');
+            if (newGameBtn) {
+                console.log('🛡️ New game button found for backup handlers');
+                
+                // onclick property backup
+                newGameBtn.onclick = function(event) {
+                    console.log('🛡️ Backup onclick handler triggered!');
+                    event.preventDefault();
+                    event.stopPropagation();
+                    alert('🛡️ バックアップハンドラーが動作しました！');
+                    startNewGame();
+                };
+                
+                console.log('✅ Backup handler installed');
+                document.getElementById('status').innerHTML = '🛡️ バックアップハンドラーが追加されました';
+                document.getElementById('status').className = 'status warning';
+            }
+        }
+        
+        // ボタンテスト
+        function testButtonSetup() {
+            console.log('🧪 ========== TESTING BUTTON SETUP ==========');
+            
+            const newGameBtn = document.getElementById('btn-new-game');
+            console.log('🔍 Button element:', newGameBtn);
+            
+            if (newGameBtn) {
+                console.log('🔍 Button details:');
+                console.log('  - ID:', newGameBtn.id);
+                console.log('  - Classes:', newGameBtn.classList.toString());
+                console.log('  - Text content:', newGameBtn.textContent);
+                console.log('  - onclick property:', typeof newGameBtn.onclick);
+                console.log('  - Computed style display:', getComputedStyle(newGameBtn).display);
+                console.log('  - offsetWidth/Height:', newGameBtn.offsetWidth, 'x', newGameBtn.offsetHeight);
+                
+                document.getElementById('status').innerHTML = '🧪 ボタンテストが完了しました（詳細はコンソールを確認）';
+                document.getElementById('status').className = 'status info';
+            } else {
+                console.error('❌ Button element not found!');
+                document.getElementById('status').innerHTML = '❌ ボタンが見つかりません';
+                document.getElementById('status').className = 'status error';
+            }
+        }
+        
+        // 手動クリック
+        function debugClickButton() {
+            console.log('🧪 Manual button click test...');
+            const btn = document.getElementById('btn-new-game');
+            if (btn) {
+                console.log('🧪 Triggering click on button...');
+                btn.click();
+            } else {
+                console.error('❌ Button not found for manual click');
+            }
+        }
+        
+        // コンソールクリア
+        function clearConsole() {
+            document.getElementById('console-output').innerHTML = 'コンソールをクリアしました...\\n';
+        }
+        
+        // 自動初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Debug test page loaded');
+            
+            setTimeout(() => {
+                setupMenuButtonHandlers();
+                testButtonSetup();
+            }, 100);
+        });
+    </script>
+</body>
+</html>

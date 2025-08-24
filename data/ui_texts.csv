@@ -1,10 +1,12 @@
 ﻿text_id,category,text_jp,text_en,font_size,color,usage_context
-game_title,title,裏路地の誘惑,Dream Realm Guardians,48,#FFD700,main_title
+game_title,title,路地裏の誘惑,Dream Realm Guardians,48,#FFD700,main_title
 game_subtitle,title,〜 嬢たちの禁断ゲーム 〜,~ Little Heroes Who Protect Dreams ~,24,#FFFFFF,subtitle
+loading_title,loading,路地裏の誘惑,Dream Realm Guardians,32,#FFD700,loading_screen
+loading_message,loading,Now Loading...,Loading memories...,16,#FFFFFF,loading_screen
 menu_new_game,menu,新しいゲーム,New Game,20,#FFFFFF,main_menu
 menu_continue,menu,続きから,Continue,20,#FFFFFF,main_menu
 menu_options,menu,設定,Options,20,#FFFFFF,main_menu
-menu_exit,menu,終了,Exit,20,#FFFFFF,main_menu
+menu_exit,menu,終了する,Exit,20,#FFFFFF,main_menu
 battle_attack,battle,攻撃,Attack,16,#FFFFFF,battle_menu
 battle_defend,battle,防御,Defend,16,#FFFFFF,battle_menu
 battle_items,battle,アイテム,Items,16,#FFFFFF,battle_menu

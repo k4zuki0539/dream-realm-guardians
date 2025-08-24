@@ -1,0 +1,576 @@
+/**
+ * 店内マップのスタイル - 完璧な店内マップ
+ * プレイヤー操作可能な詳細な店内環境
+ */
+
+/* メイン店内コンテナ */
+#shop-map-screen {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.shop-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    max-height: 600px;
+    margin: 0 auto;
+    border: 2px solid #34495e;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+}
+
+/* 廊下メインエリア */
+.corridor {
+    flex: 1;
+    position: relative;
+    background: linear-gradient(90deg, 
+        #566573 0%, 
+        #5d6d7e 20%, 
+        #6c7b7f 50%, 
+        #5d6d7e 80%, 
+        #566573 100%
+    );
+    background-size: 20px 20px;
+    background-image: 
+        linear-gradient(45deg, rgba(0,0,0,.1) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(0,0,0,.1) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(0,0,0,.1) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(0,0,0,.1) 75%);
+}
+
+/* 廊下の照明効果 */
+.corridor-lighting {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.light-beam {
+    position: absolute;
+    width: 150px;
+    height: 300px;
+    background: radial-gradient(ellipse at center, 
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        transparent 100%
+    );
+    border-radius: 50%;
+    animation: lighting-flicker 4s ease-in-out infinite alternate;
+}
+
+.light-1 {
+    top: 50px;
+    left: 100px;
+    animation-delay: 0s;
+}
+
+.light-2 {
+    top: 80px;
+    left: 350px;
+    animation-delay: 1.5s;
+}
+
+.light-3 {
+    top: 60px;
+    left: 600px;
+    animation-delay: 3s;
+}
+
+@keyframes lighting-flicker {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+}
+
+/* プレイヤー */
+.player {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, #ffffff 30%, #f8f9fa 70%, #e9ecef 100%);
+    border: 2px solid #495057;
+    border-radius: 50%;
+    box-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.5),
+        0 0 20px rgba(255, 255, 255, 0.3),
+        0 2px 4px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    /* 初期位置: 廊下左端 */
+    left: 50px;
+    top: 290px;
+}
+
+.player:hover {
+    transform: scale(1.1);
+    box-shadow: 
+        0 0 15px rgba(255, 255, 255, 0.7),
+        0 0 25px rgba(255, 255, 255, 0.5),
+        0 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+.player.moving {
+    animation: player-move 0.5s ease;
+}
+
+@keyframes player-move {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2) translateY(-2px); }
+}
+
+/* ドア共通スタイル */
+.door {
+    position: absolute;
+    width: 60px;
+    height: 100px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 5;
+}
+
+.door-frame {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #8b7355 0%, #6d5a3d 100%);
+    border: 2px solid #5d4e37;
+    border-radius: 8px 8px 2px 2px;
+    box-shadow: 
+        inset 0 2px 4px rgba(255, 255, 255, 0.1),
+        0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.door-handle {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, #ffd700 0%, #daa520 100%);
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.door-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+    font-family: 'Cinzel', serif;
+}
+
+.door-glow {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.door:hover .door-glow {
+    opacity: 1;
+    animation: door-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes door-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* 各ドアの個別スタイル */
+.door-general {
+    top: 100px;
+    left: 150px;
+}
+
+.door-general .door-frame {
+    background: linear-gradient(180deg, #27ae60 0%, #229954 100%);
+    border-color: #196f3d;
+}
+
+.door-general .door-glow {
+    background: radial-gradient(circle, rgba(39, 174, 96, 0.6) 0%, transparent 70%);
+}
+
+.door-private {
+    top: 200px;
+    left: 280px;
+}
+
+.door-private .door-frame {
+    background: linear-gradient(180deg, #3498db 0%, #2980b9 100%);
+    border-color: #1f618d;
+}
+
+.door-private .door-glow {
+    background: radial-gradient(circle, rgba(52, 152, 219, 0.6) 0%, transparent 70%);
+}
+
+.door-vip {
+    top: 150px;
+    left: 420px;
+}
+
+.door-vip .door-frame {
+    background: linear-gradient(180deg, #e74c3c 0%, #c0392b 100%);
+    border-color: #922b21;
+}
+
+.door-vip .door-glow {
+    background: radial-gradient(circle, rgba(231, 76, 60, 0.6) 0%, transparent 70%);
+}
+
+.door-special {
+    top: 250px;
+    left: 550px;
+}
+
+.door-special .door-frame {
+    background: linear-gradient(180deg, #f39c12 0%, #d68910 100%);
+    border-color: #b7950b;
+}
+
+.door-special .door-glow {
+    background: radial-gradient(circle, rgba(243, 156, 18, 0.6) 0%, transparent 70%);
+}
+
+.door-mystery {
+    top: 80px;
+    left: 680px;
+}
+
+.door-mystery .door-frame {
+    background: linear-gradient(180deg, #2c3e50 0%, #1b2631 100%);
+    border-color: #17202a;
+    box-shadow: 
+        inset 0 2px 4px rgba(255, 255, 255, 0.1),
+        0 4px 8px rgba(0, 0, 0, 0.5),
+        0 0 15px rgba(138, 43, 226, 0.3);
+}
+
+.door-mystery .door-glow {
+    background: radial-gradient(circle, rgba(138, 43, 226, 0.8) 0%, transparent 70%);
+}
+
+.door-mystery .door-label {
+    color: #8a2be2;
+    text-shadow: 0 0 5px #8a2be2;
+    animation: mystery-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes mystery-glow {
+    0% { 
+        color: #8a2be2; 
+        text-shadow: 0 0 5px #8a2be2;
+    }
+    100% { 
+        color: #ffffff; 
+        text-shadow: 0 0 10px #8a2be2, 0 0 20px #8a2be2;
+    }
+}
+
+/* 廊下の装飾 */
+.corridor-decorations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.carpet {
+    position: absolute;
+    bottom: 50px;
+    left: 100px;
+    right: 100px;
+    height: 20px;
+    background: linear-gradient(90deg, 
+        #8b0000 0%, 
+        #a0522d 20%, 
+        #8b0000 40%, 
+        #a0522d 60%, 
+        #8b0000 80%, 
+        #a0522d 100%
+    );
+    background-size: 40px 20px;
+    border: 2px solid #654321;
+    border-radius: 4px;
+    opacity: 0.7;
+}
+
+.wall-art {
+    position: absolute;
+    width: 40px;
+    height: 30px;
+    background: linear-gradient(45deg, #8b4513, #daa520);
+    border: 2px solid #654321;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.art-1 {
+    top: 30px;
+    left: 200px;
+}
+
+.art-2 {
+    top: 40px;
+    right: 150px;
+}
+
+.potted-plant {
+    position: absolute;
+    width: 15px;
+    height: 25px;
+    background: linear-gradient(180deg, #228b22 0%, #006400 100%);
+    border-radius: 50% 50% 10px 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.plant-1 {
+    bottom: 80px;
+    left: 80px;
+}
+
+.plant-2 {
+    bottom: 90px;
+    right: 80px;
+}
+
+/* UI情報パネル */
+.map-ui {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 200px;
+    z-index: 20;
+}
+
+.ui-panel {
+    background: rgba(44, 62, 80, 0.95);
+    border: 2px solid #34495e;
+    border-radius: 10px;
+    padding: 15px;
+    color: #ecf0f1;
+    font-family: 'Noto Sans JP', sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
+}
+
+.ui-panel h3 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    color: #f1c40f;
+    text-align: center;
+    border-bottom: 1px solid #34495e;
+    padding-bottom: 5px;
+}
+
+.room-info p {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    text-align: center;
+    color: #bdc3c7;
+}
+
+.controls-info {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #95a5a6;
+}
+
+/* ミニマップ */
+.minimap {
+    background: rgba(44, 62, 80, 0.95);
+    border: 2px solid #34495e;
+    border-radius: 8px;
+    padding: 10px;
+    position: relative;
+    height: 80px;
+}
+
+.minimap-corridor {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #566573 0%, #6c7b7f 50%, #566573 100%);
+    border-radius: 4px;
+    position: relative;
+}
+
+.minimap-player {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+    /* 初期位置をメインプレイヤーと同期 */
+    left: 15px;
+    top: 37px;
+}
+
+.minimap-doors {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.minimap-door {
+    position: absolute;
+    width: 8px;
+    height: 12px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.minimap-door:hover {
+    transform: scale(1.2);
+}
+
+.minimap-door[data-room="1"] {
+    background: #27ae60;
+    left: 35px;
+    top: 15px;
+}
+
+.minimap-door[data-room="2"] {
+    background: #3498db;
+    left: 60px;
+    top: 30px;
+}
+
+.minimap-door[data-room="3"] {
+    background: #e74c3c;
+    left: 85px;
+    top: 22px;
+}
+
+.minimap-door[data-room="4"] {
+    background: #f39c12;
+    left: 110px;
+    top: 38px;
+}
+
+.minimap-door[data-room="5"] {
+    background: #8a2be2;
+    left: 135px;
+    top: 12px;
+    box-shadow: 0 0 3px rgba(138, 43, 226, 0.6);
+}
+
+/* メッセージ表示 */
+.shop-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(44, 62, 80, 0.98);
+    border: 3px solid #f1c40f;
+    border-radius: 15px;
+    padding: 20px;
+    max-width: 400px;
+    text-align: center;
+    z-index: 100;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    animation: message-appear 0.3s ease;
+}
+
+.shop-message.hidden {
+    display: none;
+}
+
+@keyframes message-appear {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.message-content {
+    color: #ecf0f1;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+#message-text {
+    font-size: 18px;
+    margin: 0 0 20px 0;
+    line-height: 1.6;
+}
+
+.message-button {
+    background: linear-gradient(135deg, #f1c40f, #f39c12);
+    border: none;
+    border-radius: 25px;
+    padding: 10px 25px;
+    color: #2c3e50;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.message-button:hover {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 900px) {
+    .shop-container {
+        max-width: 100%;
+        max-height: 100vh;
+        margin: 0;
+        border: none;
+    }
+    
+    .map-ui {
+        width: 180px;
+    }
+    
+    .ui-panel {
+        padding: 10px;
+    }
+    
+    .minimap {
+        height: 60px;
+    }
+    
+    /* ドアとプレイヤーのサイズ調整 */
+    .door {
+        width: 50px;
+        height: 80px;
+    }
+    
+    .player {
+        width: 16px;
+        height: 16px;
+    }
+}

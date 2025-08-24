@@ -1,0 +1,318 @@
+/**
+ * ネオン演出画面のスタイル
+ */
+
+/* ネオン演出画面 */
+#neon-transition-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.neon-background {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* グラデーション背景 */
+.neon-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, 
+        #ff1493 0%,     /* ネオンピンク */
+        #8a2be2 40%,    /* ネオン紫 */
+        #00bfff 100%    /* ネオン青 */
+    );
+    animation: neon-pulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes neon-pulse {
+    0% { filter: brightness(1.0) saturate(1.0); }
+    100% { filter: brightness(1.3) saturate(1.2); }
+}
+
+/* ネオンエフェクト */
+.neon-effects {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.neon-title {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 
+        0 0 5px #ffffff,
+        0 0 10px #ff1493,
+        0 0 20px #ff1493,
+        0 0 40px #ff1493,
+        0 0 80px #ff1493;
+    animation: neon-flicker 2s ease-in-out infinite alternate;
+    margin-bottom: 3rem;
+    font-family: 'Cinzel', serif;
+}
+
+@keyframes neon-flicker {
+    0%, 100% {
+        text-shadow: 
+            0 0 5px #ffffff,
+            0 0 10px #ff1493,
+            0 0 20px #ff1493,
+            0 0 40px #ff1493,
+            0 0 80px #ff1493;
+    }
+    50% {
+        text-shadow: 
+            0 0 2px #ffffff,
+            0 0 5px #ff1493,
+            0 0 10px #ff1493,
+            0 0 20px #ff1493,
+            0 0 40px #ff1493;
+    }
+}
+
+/* ネオンライン */
+.neon-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.neon-line {
+    width: 400px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #00bfff, transparent);
+    box-shadow: 
+        0 0 5px #00bfff,
+        0 0 10px #00bfff,
+        0 0 20px #00bfff;
+    animation: neon-flow 2s ease-in-out infinite;
+}
+
+.neon-line:nth-child(2) {
+    animation-delay: 0.5s;
+    background: linear-gradient(90deg, transparent, #8a2be2, transparent);
+    box-shadow: 
+        0 0 5px #8a2be2,
+        0 0 10px #8a2be2,
+        0 0 20px #8a2be2;
+}
+
+.neon-line:nth-child(3) {
+    animation-delay: 1s;
+    background: linear-gradient(90deg, transparent, #ff1493, transparent);
+    box-shadow: 
+        0 0 5px #ff1493,
+        0 0 10px #ff1493,
+        0 0 20px #ff1493;
+}
+
+@keyframes neon-flow {
+    0%, 100% { opacity: 0.7; transform: scaleX(1); }
+    50% { opacity: 1; transform: scaleX(1.1); }
+}
+
+/* フェードアウトオーバーレイ */
+.fade-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+    transition: opacity 2s ease-in-out;
+}
+
+.fade-overlay.active {
+    opacity: 1;
+}
+
+/* 音声テキスト */
+.audio-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: #ffffff;
+    text-shadow: 0 0 10px #ffffff;
+    opacity: 0;
+    z-index: 15;
+    font-family: 'Noto Sans JP', sans-serif;
+    transition: opacity 1s ease-in-out;
+}
+
+.audio-text.show {
+    opacity: 1;
+}
+
+/* 店内マップ画面 */
+#shop-map-screen {
+    background: #8b4513; /* 茶色の床 */
+    position: relative;
+    overflow: hidden;
+}
+
+.shop-interior {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* 床 */
+.shop-floor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 30% 30%, rgba(160, 82, 45, 0.3) 0%, transparent 50%),
+        linear-gradient(45deg, #8b4513 25%, transparent 25%),
+        linear-gradient(-45deg, #8b4513 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #654321 75%),
+        linear-gradient(-45deg, transparent 75%, #654321 75%);
+    background-size: 60px 60px, 30px 30px, 30px 30px, 30px 30px, 30px 30px;
+}
+
+/* 壁 */
+.shop-walls .wall {
+    position: absolute;
+    background: #654321;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.wall-top {
+    top: 0;
+    left: 5%;
+    width: 90%;
+    height: 50px;
+}
+
+.wall-left {
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 100%;
+}
+
+.wall-right {
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 100%;
+}
+
+.wall-bottom {
+    bottom: 0;
+    left: 5%;
+    width: 90%;
+    height: 50px;
+}
+
+/* テーブル */
+.table {
+    position: absolute;
+    top: 35%;
+    left: 25%;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, #a0522d 0%, #8b4513 70%);
+    border-radius: 50%;
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.3),
+        inset 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* カウンター */
+.counter {
+    position: absolute;
+    top: 25%;
+    right: 15%;
+    width: 200px;
+    height: 80px;
+    background: linear-gradient(180deg, #a0522d 0%, #654321 100%);
+    border-radius: 10px;
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+/* 椅子 */
+.chair {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, #654321 0%, #3c2415 100%);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.chair-1 { top: 30%; left: 20%; }
+.chair-2 { top: 30%; left: 35%; }
+.chair-3 { top: 45%; left: 20%; }
+.chair-4 { top: 45%; left: 35%; }
+
+/* 入り口 */
+.shop-entrance {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 50px;
+    background: #000000;
+    border-radius: 10px 10px 0 0;
+}
+
+/* UI */
+.shop-ui {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #ffffff;
+    font-family: 'Noto Sans JP', sans-serif;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+}
+
+.shop-ui h2 {
+    margin: 0 0 10px 0;
+    font-size: 2rem;
+}
+
+.shop-ui p {
+    margin: 0;
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .neon-title {
+        font-size: 2.5rem;
+    }
+    
+    .neon-line {
+        width: 300px;
+    }
+    
+    .audio-text {
+        font-size: 1.5rem;
+    }
+}

@@ -20,6 +20,7 @@ class DialogSystem {
         this.currentDialog = null;
         this.dialogIndex = 0;
         this.dialogSequence = [];
+        this.currentStoryScene = null; // 現在のストーリーシーン
         this.isPlaying = false;
         this.isSkipping = false;
         this.autoPlay = false;
@@ -189,6 +190,7 @@ class DialogSystem {
         
         this.dialogIndex = 0;
         this.isPlaying = true;
+        this.currentStoryScene = sceneId; // 現在のストーリーシーンを記録
         
         // 会話画面に遷移
         await this.gameEngine.transitionToScene('dialog');
@@ -411,6 +413,9 @@ class DialogSystem {
         
         // 次のシーンに進む（ゲーム進行に応じて）
         await this._determineNextScene();
+        
+        // ストーリーシーン情報をクリア
+        this.currentStoryScene = null;
     }
 
     /**
@@ -418,18 +423,23 @@ class DialogSystem {
      * @private
      */
     async _determineNextScene() {
-        const currentScene = this.gameEngine.gameState.currentScene;
+        const currentStoryScene = this.currentStoryScene;
+        
+        console.log(`🔄 Determining next scene after: ${currentStoryScene}`);
         
         // シーン進行ロジック
-        switch (currentScene) {
+        switch (currentStoryScene) {
             case 'intro_1':
-                await this.gameEngine.transitionToScene('intro_2');
+                console.log('🎬 Moving to intro_2 dialog');
+                this.startDialog('intro_2');
                 break;
             case 'intro_2':
+                console.log('⚔️ Moving to battle_1');
                 await this.gameEngine.transitionToScene('battle_1');
                 break;
             default:
                 // デフォルトはタイトル画面に戻る
+                console.log('🏠 Returning to title screen');
                 await this.gameEngine.transitionToScene('title');
                 break;
         }
@@ -500,6 +510,7 @@ class DialogSystem {
         this.isPlaying = false;
         this.currentDialog = null;
         this.dialogSequence = [];
+        this.currentStoryScene = null;
         
         console.log('💬 Dialog stopped');
     }

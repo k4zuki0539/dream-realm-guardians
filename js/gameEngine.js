@@ -361,7 +361,9 @@ class GameEngine {
         // UIテキストの初期化
         if (this.rawGameData['ui_texts.csv']) {
             this.gameData.uiTexts = new Map();
-            this.rawGameData['ui_texts.csv'].forEach(text => {
+            console.log('📝 Processing UI texts CSV data:', this.rawGameData['ui_texts.csv'].length, 'entries');
+            this.rawGameData['ui_texts.csv'].forEach((text, index) => {
+                console.log(`  - Entry ${index}: ${text.text_id} = "${text.text_jp}"`);
                 this.gameData.uiTexts.set(text.text_id, {
                     category: text.category,
                     textJp: text.text_jp,
@@ -371,6 +373,17 @@ class GameEngine {
                     usageContext: text.usage_context
                 });
             });
+            console.log('📝 UI Texts loaded:', this.gameData.uiTexts.size);
+            
+            // デバッグ用：タイトル情報を明示的に出力
+            const titleData = this.gameData.uiTexts.get('game_title');
+            if (titleData) {
+                console.log('🏷️ Game title from CSV:', titleData.textJp);
+            } else {
+                console.warn('⚠️ game_title not found in CSV data');
+            }
+        } else {
+            console.warn('⚠️ ui_texts.csv not loaded in rawGameData');
         }
 
         console.log('✅ Game data processing completed');
@@ -898,6 +911,68 @@ class GameEngine {
         } catch (error) {
             console.warn('⚠️ Could not update emotion display:', error.message);
         }
+    }
+
+    /**
+     * ゲーム状態をリセット（新規ゲーム用）
+     */
+    resetGameState() {
+        console.log('🔄 Resetting game state for new game...');
+        
+        // プレイヤーデータリセット
+        Object.assign(this.gameState.playerData, {
+            level: 1,
+            experience: 0,
+            experienceToNext: 100,
+            maxHp: 100,
+            currentHp: 100,
+            maxMp: 50,
+            currentMp: 50,
+            hope: 0,
+            empathy: 0,
+            despair: 0,
+            loneliness: 0,
+            savedCount: 0,
+            battlesWon: 0,
+            totalBattles: 0,
+            unlockedSkills: ['mem_childhood'],
+            combinedSkills: [],
+            items: {
+                hope_fragment: 3,
+                memory_crystal: 1,
+                healing_potion: 2
+            }
+        });
+        
+        // バトル状態リセット
+        this.gameState.battleState.inBattle = false;
+        this.gameState.battleState.currentEnemy = null;
+        this.gameState.battleState.turn = 1;
+        this.gameState.battleState.playerTurn = true;
+        
+        // ゲームフラグリセット
+        this.gameState.flags.clear();
+        
+        // 初期フラグを設定
+        if (this.rawGameData && this.rawGameData['story_flags.csv']) {
+            this.rawGameData['story_flags.csv'].forEach(flag => {
+                const initialValue = flag.initial_value;
+                let value;
+                
+                if (initialValue === 'true') value = true;
+                else if (initialValue === 'false') value = false;
+                else if (!isNaN(initialValue)) value = parseInt(initialValue);
+                else value = initialValue;
+                
+                this.gameState.flags.set(flag.flag_id, value);
+            });
+        }
+        
+        // 現在のシーンをタイトルに設定
+        this.gameState.currentScene = 'title';
+        this.gameState.gameStarted = true;
+        
+        console.log('✅ Game state reset completed');
     }
 }
 

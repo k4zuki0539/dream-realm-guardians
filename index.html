@@ -5,18 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>夢境の守護者 - Dream Realm Guardians</title>
     <link rel="stylesheet" href="styles/game.css">
+    <link rel="stylesheet" href="styles/neon-transition.css">
+    <link rel="stylesheet" href="styles/shop-map.css">
+    <link rel="stylesheet" href="styles/realistic-shop-map.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="loading-screen">
+    <div id="loading-screen" style="display: none;">
         <div class="loading-content">
             <h2 id="loading-title">夢境の守護者</h2>
             <div class="loading-bar">
                 <div class="loading-progress"></div>
             </div>
-            <p>記憶を読み込み中...</p>
+            <p id="loading-message">記憶を読み込み中...</p>
         </div>
     </div>
 
@@ -30,18 +33,18 @@
             <div class="title-content">
                 <h1 class="game-title">
                     <span class="title-moon">🌙</span>
-                    <span class="title-text" id="main-title">夢境の守護者</span>
+                    <span class="title-text" id="main-title">路地裏の誘惑</span>
                     <span class="title-moon">🌙</span>
                 </h1>
-                <div class="title-subtitle">Dream Realm Guardians</div>
+                <div class="title-subtitle">〜 嬢たちの禁断ゲーム 〜</div>
                 <div class="menu-buttons">
                     <button id="btn-new-game" class="menu-button" data-action="start_game">
                         <span class="btn-icon">✨</span>
-                        <span class="btn-text">新しい夢へ</span>
+                        <span class="btn-text">新しいゲーム</span>
                     </button>
                     <button id="btn-continue" class="menu-button" data-action="continue_game">
                         <span class="btn-icon">📖</span>
-                        <span class="btn-text">記憶を辿る</span>
+                        <span class="btn-text">続きから</span>
                     </button>
                     <button id="btn-options" class="menu-button" data-action="open_options">
                         <span class="btn-icon">⚙️</span>
@@ -49,7 +52,7 @@
                     </button>
                     <button id="btn-exit" class="menu-button" data-action="exit_game">
                         <span class="btn-icon">🌅</span>
-                        <span class="btn-text">覚醒</span>
+                        <span class="btn-text">終了する</span>
                     </button>
                 </div>
             </div>
@@ -296,6 +299,186 @@
                 </div>
             </div>
         </div>
+
+        <!-- ネオン演出画面 -->
+        <div id="neon-transition-screen" class="screen">
+            <div class="neon-background">
+                <div class="neon-gradient"></div>
+                <div class="neon-effects">
+                    <h1 class="neon-title">裏路地の店</h1>
+                    <div class="neon-lines">
+                        <div class="neon-line"></div>
+                        <div class="neon-line"></div>
+                        <div class="neon-line"></div>
+                    </div>
+                </div>
+                <div class="fade-overlay"></div>
+                <div class="audio-text">いらっしゃいませ...</div>
+            </div>
+        </div>
+
+        <!-- 店内マップ画面 -->
+        <div id="shop-map-screen" class="screen">
+            <!-- 画面全体に店舗間取り -->
+            <div class="shop-layout">
+                <!-- プレイヤー -->
+                <div id="player" class="player"></div>
+                
+                <!-- エントランス・受付エリア -->
+                <div class="entrance-area">
+                    <div class="reception-desk">
+                        <div class="desk-surface"></div>
+                        <div class="desk-label">受付</div>
+                    </div>
+                    <div class="entrance-door">
+                        <div class="entrance-label">入口</div>
+                    </div>
+                    <div class="waiting-chairs">
+                        <div class="chair chair-1"></div>
+                        <div class="chair chair-2"></div>
+                        <div class="chair chair-3"></div>
+                    </div>
+                </div>
+                
+                <!-- メイン廊下 -->
+                <div class="main-corridor">
+                    <div class="corridor-carpet"></div>
+                </div>
+                
+                <!-- 左側の個室群 -->
+                <div class="room-section left-rooms">
+                    <div id="door-1" class="room-door" data-room="1" data-name="カラオケ個室A">
+                        <div class="door-frame"></div>
+                        <div class="door-handle"></div>
+                        <div class="room-number">101</div>
+                        <div class="door-glow"></div>
+                    </div>
+                    <div class="room-interior room-1">
+                        <div class="room-table"></div>
+                        <div class="room-sofa left"></div>
+                        <div class="karaoke-screen"></div>
+                    </div>
+                    
+                    <div id="door-2" class="room-door" data-room="2" data-name="カラオケ個室B">
+                        <div class="door-frame"></div>
+                        <div class="door-handle"></div>
+                        <div class="room-number">102</div>
+                        <div class="door-glow"></div>
+                    </div>
+                    <div class="room-interior room-2">
+                        <div class="room-table"></div>
+                        <div class="room-sofa left"></div>
+                        <div class="karaoke-screen"></div>
+                    </div>
+                    
+                    <div id="door-3" class="room-door" data-room="3" data-name="VIPルーム">
+                        <div class="door-frame vip"></div>
+                        <div class="door-handle gold"></div>
+                        <div class="room-number vip">VIP</div>
+                        <div class="door-glow vip"></div>
+                    </div>
+                    <div class="room-interior room-3 vip-room">
+                        <div class="room-table luxury"></div>
+                        <div class="room-sofa luxury left"></div>
+                        <div class="karaoke-screen large"></div>
+                        <div class="mini-bar"></div>
+                    </div>
+                </div>
+                
+                <!-- 右側の個室群 -->
+                <div class="room-section right-rooms">
+                    <div id="door-4" class="room-door" data-room="4" data-name="プライベート個室">
+                        <div class="door-frame"></div>
+                        <div class="door-handle"></div>
+                        <div class="room-number">201</div>
+                        <div class="door-glow"></div>
+                    </div>
+                    <div class="room-interior room-4">
+                        <div class="room-table"></div>
+                        <div class="room-sofa right"></div>
+                        <div class="karaoke-screen"></div>
+                    </div>
+                    
+                    <div id="door-5" class="room-door mystery" data-room="5" data-name="秘密の部屋">
+                        <div class="door-frame mystery"></div>
+                        <div class="door-handle mystery"></div>
+                        <div class="room-number mystery">???</div>
+                        <div class="door-glow mystery"></div>
+                    </div>
+                    <div class="room-interior room-5 mystery-room">
+                        <div class="mysterious-altar"></div>
+                        <div class="crystal-display"></div>
+                        <div class="mystical-symbols"></div>
+                    </div>
+                </div>
+                
+                <!-- バックエリア（トイレ、スタッフルームなど） -->
+                <div class="back-area">
+                    <div class="staff-room">
+                        <div class="staff-label">スタッフルーム</div>
+                    </div>
+                    <div class="restroom">
+                        <div class="restroom-label">お手洗い</div>
+                    </div>
+                    <div class="storage">
+                        <div class="storage-label">倉庫</div>
+                    </div>
+                </div>
+                
+                <!-- 照明効果 -->
+                <div class="shop-lighting">
+                    <div class="light-spot entrance-light"></div>
+                    <div class="light-spot corridor-light-1"></div>
+                    <div class="light-spot corridor-light-2"></div>
+                    <div class="light-spot vip-light"></div>
+                    <div class="light-spot mystery-light"></div>
+                </div>
+                
+                <!-- UI情報パネル -->
+                <div class="shop-ui">
+                    <div class="info-panel">
+                        <h3>🏪 個室店舗</h3>
+                        <div class="current-location">
+                            <p id="room-description">エントランスにいます</p>
+                        </div>
+                        <div class="available-rooms">
+                            <div class="room-status" data-room="1">
+                                <span class="room-indicator available"></span>
+                                <span>101号室</span>
+                            </div>
+                            <div class="room-status" data-room="2">
+                                <span class="room-indicator available"></span>
+                                <span>102号室</span>
+                            </div>
+                            <div class="room-status" data-room="3">
+                                <span class="room-indicator vip"></span>
+                                <span>VIPルーム</span>
+                            </div>
+                            <div class="room-status" data-room="4">
+                                <span class="room-indicator available"></span>
+                                <span>201号室</span>
+                            </div>
+                            <div class="room-status" data-room="5">
+                                <span class="room-indicator mystery"></span>
+                                <span>秘密の部屋</span>
+                            </div>
+                        </div>
+                        <div class="controls-guide">
+                            <p>🖱️ クリックで移動・入室</p>
+                            <p>⌨️ ESCでタイトルへ</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- メッセージ表示エリア -->
+                <div id="shop-message" class="shop-message hidden">
+                    <div class="message-content">
+                        <p id="message-text"></p>
+                        <button id="message-close" class="message-button">閉じる</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- 音楽プレーヤー -->
@@ -316,6 +499,8 @@
     <script src="js/dialogSystem.js"></script>
     <script src="js/battleSystem.js"></script>
     <script src="js/endingSystem.js"></script>
+    <script src="js/neonTransition.js"></script>
+    <script src="js/shopMapController.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

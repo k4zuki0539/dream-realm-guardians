@@ -1,0 +1,916 @@
+/**
+ * 実際の個室店舗風の間取り - 画面全体レイアウト
+ * カラオケ・個室店舗の現実的な配置とデザイン
+ */
+
+/* メイン店内画面 */
+#shop-map-screen {
+    background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+    position: relative;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* 店舗レイアウト全体 */
+.shop-layout {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: 
+        /* 床のパターン */
+        radial-gradient(circle at 25% 25%, rgba(101, 67, 33, 0.1) 0%, transparent 50%),
+        linear-gradient(45deg, #8b7355 25%, transparent 25%),
+        linear-gradient(-45deg, #8b7355 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #6d5a3d 75%),
+        linear-gradient(-45deg, transparent 75%, #6d5a3d 75%);
+    background-size: 120px 120px, 20px 20px, 20px 20px, 20px 20px, 20px 20px;
+    background-color: #a0825a;
+}
+
+/* プレイヤー */
+.player {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: radial-gradient(circle, #ffffff 20%, #f1c40f 50%, #f39c12 100%);
+    border: 3px solid #2c3e50;
+    border-radius: 50%;
+    box-shadow: 
+        0 0 15px rgba(241, 196, 15, 0.6),
+        0 0 30px rgba(241, 196, 15, 0.4),
+        0 4px 8px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 100;
+    /* 初期位置: エントランス */
+    left: 60px;
+    top: 85%;
+    transform: translate(-50%, -50%);
+}
+
+.player:hover {
+    transform: translate(-50%, -50%) scale(1.15);
+    box-shadow: 
+        0 0 20px rgba(241, 196, 15, 0.8),
+        0 0 40px rgba(241, 196, 15, 0.6),
+        0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.player.moving {
+    animation: player-walk 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes player-walk {
+    0%, 100% { 
+        transform: translate(-50%, -50%) scale(1); 
+        box-shadow: 0 0 15px rgba(241, 196, 15, 0.6), 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    25% { 
+        transform: translate(-50%, -50%) scale(1.1) rotate(5deg); 
+        box-shadow: 0 0 20px rgba(241, 196, 15, 0.8), 0 6px 12px rgba(0, 0, 0, 0.4);
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.2) translateY(-3px); 
+        box-shadow: 0 0 25px rgba(241, 196, 15, 1), 0 8px 16px rgba(0, 0, 0, 0.5);
+    }
+    75% { 
+        transform: translate(-50%, -50%) scale(1.1) rotate(-5deg); 
+        box-shadow: 0 0 20px rgba(241, 196, 15, 0.8), 0 6px 12px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* エントランス・受付エリア */
+.entrance-area {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20%;
+    background: linear-gradient(180deg, #8b4513 0%, #654321 100%);
+    border-top: 4px solid #5d4e37;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.reception-desk {
+    position: absolute;
+    top: 30%;
+    left: 15%;
+    width: 200px;
+    height: 80px;
+    transform: translateY(-50%);
+}
+
+.desk-surface {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #b8860b 0%, #8b6914 100%);
+    border-radius: 12px;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        inset 0 2px 8px rgba(255, 255, 255, 0.2);
+    border: 2px solid #696969;
+}
+
+.desk-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 18px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    font-family: 'Cinzel', serif;
+}
+
+.entrance-door {
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    width: 120px;
+    height: 100px;
+    transform: translateY(-50%);
+    background: linear-gradient(180deg, #2c1810 0%, #1a0f08 100%);
+    border-radius: 8px 8px 0 0;
+    border: 3px solid #8b4513;
+    box-shadow: 
+        0 6px 16px rgba(0, 0, 0, 0.5),
+        inset 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+
+.entrance-label {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #ffd700;
+    font-weight: bold;
+    font-size: 16px;
+    text-shadow: 0 0 8px #ffd700;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.waiting-chairs {
+    position: absolute;
+    top: 60%;
+    left: 40%;
+    width: 300px;
+    height: 40px;
+}
+
+.chair {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, #654321 0%, #3c2415 100%);
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.chair-1 { left: 0; }
+.chair-2 { left: 50px; }
+.chair-3 { left: 100px; }
+
+/* メイン廊下 */
+.main-corridor {
+    position: absolute;
+    top: 15%;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background: linear-gradient(90deg, 
+        #8b7355 0%, 
+        #a0825a 25%, 
+        #b8936c 50%, 
+        #a0825a 75%, 
+        #8b7355 100%
+    );
+    border-top: 4px solid #6d5a3d;
+    border-bottom: 4px solid #6d5a3d;
+}
+
+.corridor-carpet {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    right: 10%;
+    height: 80px;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, 
+        #8b0000 0%, 
+        #a0522d 20%, 
+        #8b0000 40%, 
+        #a0522d 60%, 
+        #8b0000 80%, 
+        #a0522d 100%
+    );
+    background-size: 60px 80px;
+    border: 4px solid #654321;
+    border-radius: 8px;
+    opacity: 0.8;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        inset 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+
+/* 部屋セクション */
+.room-section {
+    position: absolute;
+    height: 100%;
+}
+
+.left-rooms {
+    top: 0;
+    left: 0;
+    width: 45%;
+}
+
+.right-rooms {
+    top: 0;
+    right: 0;
+    width: 45%;
+}
+
+/* 個室ドア */
+.room-door {
+    position: absolute;
+    width: 80px;
+    height: 140px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 50;
+}
+
+/* 左側の部屋のドア配置 */
+.left-rooms .room-door:nth-child(1) { /* 101号室 */
+    top: 10%;
+    right: 0;
+}
+
+.left-rooms .room-door:nth-child(3) { /* 102号室 */
+    top: 35%;
+    right: 0;
+}
+
+.left-rooms .room-door:nth-child(5) { /* VIPルーム */
+    top: 65%;
+    right: 0;
+}
+
+/* 右側の部屋のドア配置 */
+.right-rooms .room-door:nth-child(1) { /* 201号室 */
+    top: 20%;
+    left: 0;
+}
+
+.right-rooms .room-door:nth-child(3) { /* 秘密の部屋 */
+    top: 50%;
+    left: 0;
+}
+
+.door-frame {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #8b7355 0%, #6d5a3d 100%);
+    border: 3px solid #5d4e37;
+    border-radius: 12px 12px 4px 4px;
+    box-shadow: 
+        inset 0 4px 12px rgba(255, 255, 255, 0.15),
+        0 6px 16px rgba(0, 0, 0, 0.4);
+    position: relative;
+}
+
+.door-frame.vip {
+    background: linear-gradient(180deg, #b8860b 0%, #8b6914 100%);
+    border-color: #daa520;
+    box-shadow: 
+        inset 0 4px 12px rgba(255, 255, 255, 0.2),
+        0 6px 16px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(218, 165, 32, 0.4);
+}
+
+.door-frame.mystery {
+    background: linear-gradient(180deg, #2c1810 0%, #1a0f08 100%);
+    border-color: #8a2be2;
+    box-shadow: 
+        inset 0 4px 12px rgba(138, 43, 226, 0.2),
+        0 6px 16px rgba(0, 0, 0, 0.5),
+        0 0 25px rgba(138, 43, 226, 0.5);
+}
+
+.door-handle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, #ffd700 0%, #b8860b 100%);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.door-handle.gold {
+    background: radial-gradient(circle, #ffd700 0%, #ff8c00 100%);
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.4),
+        0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+.door-handle.mystery {
+    background: radial-gradient(circle, #8a2be2 0%, #4b0082 100%);
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.4),
+        0 0 8px rgba(138, 43, 226, 0.8);
+}
+
+.room-number {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    font-family: 'Cinzel', serif;
+}
+
+.room-number.vip {
+    color: #ffd700;
+    text-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 0.8),
+        0 0 8px rgba(255, 215, 0, 0.6);
+    font-size: 20px;
+}
+
+.room-number.mystery {
+    color: #8a2be2;
+    text-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 0.8),
+        0 0 12px rgba(138, 43, 226, 0.8);
+    animation: mystery-pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes mystery-pulse {
+    0% { 
+        color: #8a2be2; 
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 12px rgba(138, 43, 226, 0.8);
+    }
+    100% { 
+        color: #ffffff; 
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 20px rgba(138, 43, 226, 1);
+    }
+}
+
+.door-glow {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border-radius: 16px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+}
+
+.door-glow.vip {
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.5) 0%, transparent 70%);
+}
+
+.door-glow.mystery {
+    background: radial-gradient(circle, rgba(138, 43, 226, 0.6) 0%, transparent 70%);
+}
+
+.room-door:hover .door-glow {
+    opacity: 1;
+    animation: door-glow-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes door-glow-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.05); opacity: 1; }
+}
+
+/* 部屋インテリア */
+.room-interior {
+    position: absolute;
+    width: 40%;
+    height: 20%;
+    background: rgba(139, 115, 85, 0.1);
+    border: 1px dashed rgba(109, 90, 61, 0.3);
+    border-radius: 8px;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.left-rooms .room-interior:nth-child(2) { /* 101号室内部 */
+    top: 8%;
+    left: 0;
+}
+
+.left-rooms .room-interior:nth-child(4) { /* 102号室内部 */
+    top: 33%;
+    left: 0;
+}
+
+.left-rooms .room-interior:nth-child(6) { /* VIPルーム内部 */
+    top: 63%;
+    left: 0;
+    background: rgba(184, 134, 11, 0.15);
+    border-color: rgba(218, 165, 32, 0.4);
+}
+
+.right-rooms .room-interior:nth-child(2) { /* 201号室内部 */
+    top: 18%;
+    right: 0;
+}
+
+.right-rooms .room-interior:nth-child(4) { /* 秘密の部屋内部 */
+    top: 48%;
+    right: 0;
+    background: rgba(138, 43, 226, 0.1);
+    border-color: rgba(138, 43, 226, 0.3);
+}
+
+.room-table {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle, #8b4513 0%, #654321 100%);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.room-table.luxury {
+    background: radial-gradient(circle, #b8860b 0%, #8b6914 100%);
+    width: 40px;
+    height: 40px;
+    box-shadow: 
+        0 3px 6px rgba(0, 0, 0, 0.4),
+        0 0 8px rgba(184, 134, 11, 0.3);
+}
+
+.room-sofa {
+    position: absolute;
+    width: 60px;
+    height: 15px;
+    background: linear-gradient(90deg, #654321 0%, #8b4513 100%);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.room-sofa.left {
+    top: 70%;
+    left: 20%;
+}
+
+.room-sofa.right {
+    top: 70%;
+    right: 20%;
+}
+
+.room-sofa.luxury {
+    background: linear-gradient(90deg, #8b6914 0%, #b8860b 100%);
+    height: 20px;
+    box-shadow: 
+        0 3px 6px rgba(0, 0, 0, 0.4),
+        0 0 6px rgba(184, 134, 11, 0.2);
+}
+
+.karaoke-screen {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    width: 25px;
+    height: 20px;
+    background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%);
+    border: 2px solid #34495e;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.karaoke-screen.large {
+    width: 35px;
+    height: 25px;
+    border-color: #f1c40f;
+    box-shadow: 
+        0 3px 6px rgba(0, 0, 0, 0.4),
+        0 0 8px rgba(241, 196, 15, 0.3);
+}
+
+.mini-bar {
+    position: absolute;
+    top: 20%;
+    right: 20%;
+    width: 20px;
+    height: 30px;
+    background: linear-gradient(180deg, #8b6914 0%, #654321 100%);
+    border: 1px solid #b8860b;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* 秘密の部屋の特別な装飾 */
+.mysterious-altar {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 25px;
+    height: 25px;
+    background: radial-gradient(circle, #8a2be2 0%, #4b0082 100%);
+    border-radius: 50%;
+    box-shadow: 
+        0 3px 6px rgba(0, 0, 0, 0.4),
+        0 0 12px rgba(138, 43, 226, 0.6);
+    animation: altar-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes altar-glow {
+    0% { 
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4), 0 0 12px rgba(138, 43, 226, 0.6);
+    }
+    100% { 
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4), 0 0 20px rgba(138, 43, 226, 1);
+    }
+}
+
+.crystal-display {
+    position: absolute;
+    top: 60%;
+    left: 30%;
+    width: 8px;
+    height: 12px;
+    background: linear-gradient(45deg, #8a2be2 0%, #ffffff 50%, #8a2be2 100%);
+    border-radius: 2px;
+    box-shadow: 0 0 8px rgba(138, 43, 226, 0.8);
+    animation: crystal-sparkle 2s ease-in-out infinite;
+}
+
+@keyframes crystal-sparkle {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+.mystical-symbols {
+    position: absolute;
+    top: 60%;
+    right: 30%;
+    width: 8px;
+    height: 8px;
+    background: #8a2be2;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(138, 43, 226, 0.8);
+    animation: symbol-rotate 4s linear infinite;
+}
+
+@keyframes symbol-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* バックエリア */
+.back-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 15%;
+    background: linear-gradient(180deg, #5d4e37 0%, #3c2415 100%);
+    border-bottom: 4px solid #8b7355;
+}
+
+.staff-room, .restroom, .storage {
+    position: absolute;
+    top: 30%;
+    height: 60px;
+    background: linear-gradient(180deg, #6d5a3d 0%, #5d4e37 100%);
+    border: 2px solid #8b7355;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.staff-room {
+    left: 10%;
+    width: 120px;
+}
+
+.restroom {
+    left: 40%;
+    width: 100px;
+}
+
+.storage {
+    right: 10%;
+    width: 100px;
+}
+
+.staff-label, .restroom-label, .storage-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ecf0f1;
+    font-size: 12px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* 照明効果 */
+.shop-lighting {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.light-spot {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+    animation: light-flicker 4s ease-in-out infinite alternate;
+}
+
+.entrance-light {
+    bottom: 10%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    transform: translateX(-50%);
+}
+
+.corridor-light-1 {
+    top: 40%;
+    left: 30%;
+    width: 150px;
+    height: 300px;
+    animation-delay: 1s;
+}
+
+.corridor-light-2 {
+    top: 40%;
+    right: 30%;
+    width: 150px;
+    height: 300px;
+    animation-delay: 2s;
+}
+
+.vip-light {
+    top: 65%;
+    left: 20%;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.2) 0%, transparent 70%);
+    animation-delay: 0.5s;
+}
+
+.mystery-light {
+    top: 50%;
+    right: 20%;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(138, 43, 226, 0.3) 0%, transparent 70%);
+    animation-delay: 3s;
+}
+
+@keyframes light-flicker {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+}
+
+/* UI情報パネル */
+.shop-ui {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 280px;
+    z-index: 200;
+}
+
+.info-panel {
+    background: rgba(44, 62, 80, 0.95);
+    border: 3px solid #f1c40f;
+    border-radius: 12px;
+    padding: 20px;
+    color: #ecf0f1;
+    font-family: 'Noto Sans JP', sans-serif;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+}
+
+.info-panel h3 {
+    margin: 0 0 15px 0;
+    font-size: 20px;
+    color: #f1c40f;
+    text-align: center;
+    text-shadow: 0 0 8px rgba(241, 196, 15, 0.6);
+    font-family: 'Cinzel', serif;
+}
+
+.current-location {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(52, 73, 94, 0.7);
+    border-radius: 8px;
+    border: 1px solid #34495e;
+}
+
+.current-location p {
+    margin: 0;
+    font-size: 16px;
+    color: #ffffff;
+    text-align: center;
+    font-weight: bold;
+}
+
+.available-rooms {
+    margin-bottom: 15px;
+}
+
+.room-status {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 6px;
+    background: rgba(52, 73, 94, 0.5);
+    border-radius: 6px;
+    transition: background 0.3s ease;
+}
+
+.room-status:hover {
+    background: rgba(52, 73, 94, 0.8);
+}
+
+.room-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+.room-indicator.available {
+    background: #27ae60;
+    box-shadow: 0 0 8px rgba(39, 174, 96, 0.6);
+}
+
+.room-indicator.vip {
+    background: #f1c40f;
+    box-shadow: 0 0 8px rgba(241, 196, 15, 0.6);
+}
+
+.room-indicator.mystery {
+    background: #8a2be2;
+    box-shadow: 0 0 8px rgba(138, 43, 226, 0.6);
+    animation: mystery-indicator 2s ease-in-out infinite alternate;
+}
+
+@keyframes mystery-indicator {
+    0% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.controls-guide {
+    border-top: 1px solid #34495e;
+    padding-top: 12px;
+}
+
+.controls-guide p {
+    margin: 0 0 6px 0;
+    font-size: 14px;
+    color: #bdc3c7;
+}
+
+/* メッセージ表示 */
+.shop-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(44, 62, 80, 0.98);
+    border: 4px solid #f1c40f;
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 500px;
+    text-align: center;
+    z-index: 1000;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+    animation: message-appear 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    backdrop-filter: blur(15px);
+}
+
+.shop-message.hidden {
+    display: none;
+}
+
+@keyframes message-appear {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.7) rotate(5deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+}
+
+.message-content {
+    color: #ecf0f1;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+#message-text {
+    font-size: 20px;
+    margin: 0 0 25px 0;
+    line-height: 1.8;
+    color: #ffffff;
+}
+
+.message-button {
+    background: linear-gradient(135deg, #f1c40f, #f39c12);
+    border: none;
+    border-radius: 30px;
+    padding: 12px 30px;
+    color: #2c3e50;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    font-family: 'Noto Sans JP', sans-serif;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.message-button:hover {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 1200px) {
+    .shop-ui {
+        width: 240px;
+        right: 15px;
+        top: 15px;
+    }
+    
+    .info-panel {
+        padding: 15px;
+    }
+    
+    .player {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .room-door {
+        width: 70px;
+        height: 120px;
+    }
+}
+
+@media (max-width: 768px) {
+    .shop-ui {
+        width: 200px;
+        right: 10px;
+        top: 10px;
+    }
+    
+    .info-panel {
+        padding: 12px;
+    }
+    
+    .info-panel h3 {
+        font-size: 16px;
+    }
+    
+    .current-location p {
+        font-size: 14px;
+    }
+    
+    .player {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .room-door {
+        width: 60px;
+        height: 100px;
+    }
+    
+    .room-number {
+        font-size: 18px;
+    }
+}
